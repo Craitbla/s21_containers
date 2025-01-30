@@ -1,6 +1,6 @@
 ---
 triple:          'x86_64-apple-darwin'
-binary-path:     '/Users/craitbla/Documents/CPP2_s21_containers-1/src/s21_list/s21_list'
+binary-path:     '/Users/craitbla/Documents/for_github/s21_containers/s21_list/s21_list'
 relocations:
   - { offsetInCU: 0xF9, offset: 0xF9, size: 0x8, addend: 0x0, symName: __ZN3s214ListIiE12ListIteratorIiED1Ev, symObjAddr: 0x0, symBinAddr: 0x1000034EA, symSize: 0x1B }
   - { offsetInCU: 0x3227, offset: 0x3227, size: 0x8, addend: 0x0, symName: __ZStL8__ioinit, symObjAddr: 0x20CD8, symBinAddr: 0x10000801C, symSize: 0x0 }
