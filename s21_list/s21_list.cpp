@@ -17,24 +17,58 @@
 
 // переделать ком в тестах
 
+// std::cout << "\n" << *(++std_lst.begin()) << *(++s21_lst.begin()) << "\n";
 int main() {
   // это и начало и конец и один и тот же нулевой узел
-  std::list<int> s21_lst{1};
-  // auto it1 = s21_lst.begin();
-  // auto it2 = s21_lst.end();
-  // it2++;
+  // s21::List<int> s21_lst;
+  try {
+    std::list<int> lst1{1, 2};
+    std::list<int> lst2{3, 4};
+    // s21_it = s21_lst.end();
+    std::list<int>::iterator it1 = lst1.begin();
+    lst1.splice(it1, lst2);
+    std::cout << *it1 << " \t";
+    std::cout << "\n";
+    for (auto it = lst1.begin(); it != lst1.end(); it++) {
+      std::cout << *it << " \t a";
+    }
+    std::cout << "\n";
+    for (auto it = lst2.begin(); it != lst2.end(); it++) {
+      std::cout << *it << " \t b";
+    }
+
+  } catch (const char *error_message) {
+    std::cout << error_message << std::endl;
+  }
+  std::cout << "The End..." << std::endl;
+
+  // std::cout << "\n";
+  // for (auto it = std_lst.begin(); it != std_lst.end(); it++) {
+  //   std::cout << *it << "\t";
+  // }
+
+  // std::cout << "\n";
+  // std::cout << "\n";
+  // s21_it++;
+  // // std_it++;
+
+  // s21_new_it = s21_lst.insert(s21_it, 7);
+  // std_new_it = std_lst.insert(std_it, 7);
+
+  // for (auto it = s21_lst.begin(); it != s21_lst.end(); it++) {
+  //   std::cout << *it << " 21\t";
+  // }
+  // std::cout << "\n";
+  // for (auto it = std_lst.begin(); it != std_lst.end(); it++) {
+  //   std::cout << *it << "\t";
+  // }
+  // std::cout << "\n";
+
+  // s21_lst.pop_front();
   // for (auto it = s21_lst.begin(); it != s21_lst.end(); it++) {
   //   std::cout << *it << "\t";
   // }
-  // s21_lst.push_front(1);
-  for (auto it = s21_lst.begin(); it != s21_lst.end(); it++) {
-    std::cout << *it << "\t";
-  }
-  s21_lst.pop_front();
-  for (auto it = s21_lst.begin(); it != s21_lst.end(); it++) {
-    std::cout << *it << "\t";
-  }
-  std::cout << s21_lst.front();
+  // std::cout << s21_lst.front();
   // s21_lst.pop_front();
   // if (it1 == it2) {
 

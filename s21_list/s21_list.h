@@ -453,7 +453,10 @@ typename List<T>::iterator List<T>::insert(List<T>::iterator pos,
   return it;
 }
 
-template <class T> void List<T>::erase(iterator pos) {
+template <class T> void List<T>::erase(iterator pos) { // доработка
+  if ((*this).empty()) {
+    throw "It is impossible to remove an element from an empty list";
+  }
   if (pos == (*this).begin()) {
     (*this).pop_front();
   } else if (pos == --(*this).end()) {
@@ -573,8 +576,7 @@ template <class T> void List<T>::splice(const_iterator pos, List &other) {
       if (next_node == begin_) {
         next_node->prev_ = other_end;
         other_end->next_ = next_node;
-        begin_ = other_beg; // ok
-        // end_ =
+        begin_ = other_beg;
 
         other.end_->prev_ = nullptr;
 
