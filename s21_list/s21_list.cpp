@@ -9,6 +9,8 @@
 #include <stack>
 // using namespace s21;
 
+// везде в push и pop проверки на size
+
 // вначале тесты (база 52)
 
 // потом инкапсуляция
@@ -16,15 +18,28 @@
 // переделать ком в тестах
 
 int main() {
-  //это и начало и конец и один и тот же нулевой узел
-  std::list<int> std_lst;
-  auto it1 = std_lst.begin();
-  auto it2 = std_lst.end();
+  // это и начало и конец и один и тот же нулевой узел
+  std::list<int> s21_lst{1};
+  // auto it1 = s21_lst.begin();
+  // auto it2 = s21_lst.end();
   // it2++;
-  if (it1 == it2) {
-
-    std::cout << "ddddd\n";
+  // for (auto it = s21_lst.begin(); it != s21_lst.end(); it++) {
+  //   std::cout << *it << "\t";
+  // }
+  // s21_lst.push_front(1);
+  for (auto it = s21_lst.begin(); it != s21_lst.end(); it++) {
+    std::cout << *it << "\t";
   }
+  s21_lst.pop_front();
+  for (auto it = s21_lst.begin(); it != s21_lst.end(); it++) {
+    std::cout << *it << "\t";
+  }
+  std::cout << s21_lst.front();
+  // s21_lst.pop_front();
+  // if (it1 == it2) {
+
+  //   std::cout << "ddddd\n";
+  // }
   // std::cout << "ddddd\n";
   // it++;
   // std::cout << *it;
@@ -37,9 +52,7 @@ int main() {
   // std::cout << *it;
 
   // std::cout << "\n";
-  // for (auto it = std_lst.begin(); it != std_lst.end(); it++) {
-  //   std::cout << *it << "\t";
-  // }
+
   // s21::List<int> s21_lst_first = {3, 6};
   // s21::List<int> s21_lst_second = {1, 5};
   // // std::list<int> std_lst_first = {3, 6};

@@ -247,8 +247,8 @@ public:
 };
 
 template <class T> void List<T>::defoult() {
-  begin_ = nullptr;
-  end_ = new node<value_type>();
+  begin_ = new node<value_type>();
+  end_ = begin_;
   size_ = 0;
 }
 
@@ -290,19 +290,13 @@ template <class T> List<T>::List(List &&l) {
 
 template <class T> List<T>::~List() { this->clear_del(); }
 
-template <class T> const T &List<T>::front() {
-  if (size_ != 0) {
-    return this->begin_->data_;
-  } else {
-    throw std::length_error("There are no elements in the container");
-  }
-}
+template <class T> const T &List<T>::front() { return this->begin_->data_; }
 
 template <class T> const T &List<T>::back() {
   if (size_ != 0) {
     return this->end_->prev_->data_;
   } else {
-    throw std::length_error("There are no elements in the container");
+    return this->begin_->data_;
   }
 }
 
@@ -412,9 +406,7 @@ void List<T>::swap_com_neighboring(iterator &it_com_a, iterator &it_com_b) {
 }
 
 template <class T> void List<T>::clear_del() {
-  while (!(*this).empty()) {
-    (*this).pop_front();
-  }
+  (*this).clear();
   if (end_ != nullptr) {
     delete end_;
     end_ = nullptr;
@@ -483,7 +475,7 @@ template <class T> void List<T>::erase(iterator pos) {
   }
 }
 
-template <class T> bool List<T>::empty() { return (begin_ == nullptr); }
+template <class T> bool List<T>::empty() { return (begin_ == end_); }
 
 template <class T> size_t List<T>::max_size() {
   constexpr auto max_size = std::numeric_limits<std::size_t>::max();
@@ -523,7 +515,7 @@ template <class T> void List<T>::pop_front() {
       begin_ = new_beg;
     } else {
       delete begin_;
-      begin_ = nullptr;
+      begin_ = end_;
       end_->prev_ = nullptr; ///
     }
     size_--;
@@ -539,7 +531,7 @@ template <class T> void List<T>::pop_back() {
       end_->prev_ = new_pen;
     } else {
       delete begin_;
-      begin_ = nullptr;
+      begin_ = end_;
       end_->prev_ = nullptr;
     }
     size_--;
@@ -608,7 +600,6 @@ template <class T> void List<T>::splice(const_iterator pos, List &other) {
       (*this).size_ += other.size_;
       other.end_ = nullptr;
       other.begin_ = nullptr;
-      // other.clear_del();
 
       other.size_ = 0;
     }
