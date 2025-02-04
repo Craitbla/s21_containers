@@ -55,7 +55,7 @@ public:
   List &operator=(List &&l) noexcept {
     if (this != &l) {
       if (!(*this).empty() || this->end_ != nullptr) {
-        clear_clear();
+        clear_del();
       }
       this->size_ = l.size_;
       this->begin_ = l.begin_;
@@ -67,7 +67,7 @@ public:
     return *this;
   }
   List &operator=(const List &l) {
-    (*this).clear_common();
+    (*this).clear();
     node<T> *cur_node = l.begin_;
     if (this->end_ == nullptr) {
       this->end_ = new node<T>();
@@ -218,8 +218,8 @@ public:
   size_type size() { return size_; };
   size_type max_size();
 
-  void clear_clear();
-  void clear_common();
+  void clear_del();
+  void clear();
   iterator insert(iterator pos, const_reference value);
   void erase(iterator pos);
   void push_back(const_reference value);
@@ -288,7 +288,7 @@ template <class T> List<T>::List(List &&l) {
   l.size_ = 0;
 }
 
-template <class T> List<T>::~List() { this->clear_clear(); }
+template <class T> List<T>::~List() { this->clear_del(); }
 
 template <class T> const T &List<T>::front() {
   if (size_ != 0) {
@@ -411,7 +411,7 @@ void List<T>::swap_com_neighboring(iterator &it_com_a, iterator &it_com_b) {
   com_b_next->prev_ = n_com_a;
 }
 
-template <class T> void List<T>::clear_clear() {
+template <class T> void List<T>::clear_del() {
   while (!(*this).empty()) {
     (*this).pop_front();
   }
@@ -421,7 +421,7 @@ template <class T> void List<T>::clear_clear() {
   }
 }
 
-template <class T> void List<T>::clear_common() {
+template <class T> void List<T>::clear() {
   while (!(*this).empty()) {
     this->pop_front();
   }
@@ -608,7 +608,7 @@ template <class T> void List<T>::splice(const_iterator pos, List &other) {
       (*this).size_ += other.size_;
       other.end_ = nullptr;
       other.begin_ = nullptr;
-      // other.clear_clear();
+      // other.clear_del();
 
       other.size_ = 0;
     }

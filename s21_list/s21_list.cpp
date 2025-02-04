@@ -8,12 +8,34 @@
 #include <list>
 #include <stack>
 // using namespace s21;
+
+// вначале тесты (база 52)
+
+// потом инкапсуляция
+
+// переделать ком в тестах
+
 int main() {
-  s21::List<int> s21_lst;
-  // std::list<int> std_lst;
-  for (auto it = s21_lst.begin(); it != s21_lst.end(); it++) {
-    std::cout << *it << "\t";
+  //это и начало и конец и один и тот же нулевой узел
+  std::list<int> std_lst;
+  auto it1 = std_lst.begin();
+  auto it2 = std_lst.end();
+  // it2++;
+  if (it1 == it2) {
+
+    std::cout << "ddddd\n";
   }
+  // std::cout << "ddddd\n";
+  // it++;
+  // std::cout << *it;
+  // std::cout << "ddddd\n";
+  // it++;
+  // std::cout << *it;
+
+  // std::list<int> std_lst;
+  // auto it = std_lst.begin();
+  // std::cout << *it;
+
   // std::cout << "\n";
   // for (auto it = std_lst.begin(); it != std_lst.end(); it++) {
   //   std::cout << *it << "\t";

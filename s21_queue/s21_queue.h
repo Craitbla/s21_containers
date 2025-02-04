@@ -16,7 +16,7 @@ public:
   Queue(std::initializer_list<value_type> const &items) : List<T>(items) {}
   Queue(const Queue &q) : List<T>(q) {}
   Queue(Queue &&q) : List<T>(std::move(q)) {}
-  ~Queue() { List<T>::clear_clear(); }
+  ~Queue() { List<T>::clear_del(); }
 
   Queue &operator=(const Queue &q) {
     List<T>::operator=(q);
