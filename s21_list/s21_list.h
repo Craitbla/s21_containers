@@ -435,18 +435,20 @@ typename List<T>::iterator List<T>::insert(List<T>::iterator pos,
     while ((next_node != pos.p_node_) && (next_node != end_)) {
       next_node = next_node->next_;
     }
-    if (next_node != end_) {
-      node<T> *prev_node = next_node->prev_;
-      node<T> *new_node = new node<value_type>(value, prev_node, next_node);
-      prev_node->next_ = new_node;
-      next_node->prev_ = new_node;
+    if (next_node == pos.p_node_) {
+      if (next_node != end_) {
+        node<T> *prev_node = next_node->prev_;
+        node<T> *new_node = new node<value_type>(value, prev_node, next_node);
+        prev_node->next_ = new_node;
+        next_node->prev_ = new_node;
 
-      it.p_node_ = new_node;
-    } else {
-      node<T> *new_node = new node<value_type>(value);
-      it.p_node_ = new_node;
+        it.p_node_ = new_node;
+      } else {
+        node<T> *new_node = new node<value_type>(value);
+        it.p_node_ = new_node;
+      }
+      (*this).size_++;
     }
-    (*this).size_++;
   }
   pos.p_node_ = it.p_node_;
 
