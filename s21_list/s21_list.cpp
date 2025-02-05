@@ -19,17 +19,27 @@
 
 // std::cout << "\n" << *(++std_lst.begin()) << *(++s21_lst.begin()) << "\n";
 int main() {
-  s21::List<int> s21_lst1{1, 2};
-  s21::List<int> s21_lst2{3};
-  s21::List<int>::iterator s21_it2 = s21_lst2.begin();
-  auto s21_it1 = s21_lst1.insert(s21_it2, 10);
-  // s21::List<int>::iterator s21_it_check = s21_lst1.begin();
-  for (auto it = s21_lst1.begin(); it != s21_lst1.end(); it++) {
-    std::cout << *it << " \t";
+  s21::List<int> s21_lst_first = {3, 8, 10};
+  s21::List<int> s21_lst_second = {-10, 1, 2, 6, 100};
+  std::list<int> std_lst_first = {3, 8, 10};
+  std::list<int> std_lst_second = {-10, 1, 2, 6, 100};
+  s21_lst_first.merge(s21_lst_second);
+  std_lst_first.merge(std_lst_second);
+
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    std::cout << *std_it_check << " \t" << *s21_it_check << " \t";
+
+    std_it_check++;
   }
-  std::cout << " \n" << s21_lst1.size() << " \n";
-  // std::cout << *s21_it1 << " \n";
-  std::cout << *s21_it2 << " \n";
+  // for (auto it = s21_lst1.begin(); it != s21_lst1.end(); it++) {
+  //   std::cout << *it << " \t";
+  // }
+  // std::cout << "fffff \n\n\nsssss";
+  // for (auto it = s21_lst2.begin(); it != s21_lst2.end(); it++) {
+  //   std::cout << *it << " \t";
+  // }
 
   // ДЛЯ ОБЫЧНОЙ ПРОВЕРКИ s21 и std
   //  s21::List<int> s21_lst = {1, 2, 3};

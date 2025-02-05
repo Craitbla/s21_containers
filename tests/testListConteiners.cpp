@@ -379,73 +379,305 @@ TEST(List, Erase_With_Iterator_Not_Of_This_List) {
   EXPECT_EQ(s21_lst1.size(), 2);
 }
 
-// добавить 1 элемент
-// добавить много элементов
-// когда лист 1 пуст
-// когда лист 2 пуст
-// когда оба пусты
-// добавить 2 элемента в начало
-// добавить 2 элемента в конец
-// добавить 2 элемента в середину
-// сравнение c std
+TEST(List, Splice_One_Element_To_Front) {
+  s21::List<int> s21_lst_first = {1, 2};
+  s21::List<int> s21_lst_second = {10};
+  std::list<int> std_lst_first = {1, 2};
+  std::list<int> std_lst_second = {10};
+  s21::List<int>::iterator s21_it = s21_lst_first.begin();
+  std::list<int>::iterator std_it = std_lst_first.begin();
+  s21_lst_first.splice(s21_it, s21_lst_second);
+  std_lst_first.splice(std_it, std_lst_second);
 
-// TEST(List, Splice_One_Element) {
-//   s21::List<int> s21_lst_first = {1, 2};
-//   s21::List<int> s21_lst_second = {10};
-//   std::list<int> std_lst_first = {1, 2};
-//   std::list<int> std_lst_second = {10};
-//   s21::List<int>::iterator s21_it = s21_lst_first.begin();
-//   std::list<int>::iterator std_it = std_lst_first.begin();
-//   s21_it++;
-//   std_it++;
-//   s21_lst_first.splice(s21_it, s21_lst_second);
-//   std_lst_first.splice(std_it, std_lst_second);
-//   s21::List<int>::iterator s21_it_check = s21_lst.begin();
-//   EXPECT_EQ(*s21_it_check, 1);
-//   s21_it_check++;
-//   EXPECT_EQ(*s21_it_check, 2);
-//   s21_it_check++;
-//   EXPECT_EQ(*s21_it_check, DATA_IN_END_NODE);
-// }
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
 
-// TEST(List, Splice_Set_Of_Elements) {
-//   s21::List<int> s21_lst_first = {1, 2, 3};
-//   s21::List<int> s21_lst_second = {4, 5, 6};
-//   std::list<int> std_lst_first = {1, 2, 3};
-//   std::list<int> std_lst_second = {4, 5, 6};
-//   s21::List<int>::iterator s21_it = s21_lst_first.begin();
-//   std::list<int>::iterator std_it = std_lst_first.begin();
-//   s21_lst_first.splice(s21_it, s21_lst_second);
-//   std_lst_first.splice(std_it, std_lst_second);
-//   EXPECT_EQ(s21_lst_first.front(), std_lst_first.front());
-//   EXPECT_EQ(s21_lst_first.back(), std_lst_first.back());
-// }
+TEST(List, Splice_One_Element_To_Back) {
+  s21::List<int> s21_lst_first = {1, 2};
+  s21::List<int> s21_lst_second = {10};
+  std::list<int> std_lst_first = {1, 2};
+  std::list<int> std_lst_second = {10};
+  s21::List<int>::iterator s21_it = s21_lst_first.end();
+  std::list<int>::iterator std_it = std_lst_first.end();
+  s21_lst_first.splice(s21_it, s21_lst_second);
+  std_lst_first.splice(std_it, std_lst_second);
 
-// TEST(List, Splice_To_Front) {
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
 
-// TEST(List, Splice_To_Back) {
+TEST(List, Splice_One_Element_To_Middle) {
+  s21::List<int> s21_lst_first = {1, 2};
+  s21::List<int> s21_lst_second = {10};
+  std::list<int> std_lst_first = {1, 2};
+  std::list<int> std_lst_second = {10};
+  s21::List<int>::iterator s21_it = s21_lst_first.begin();
+  std::list<int>::iterator std_it = std_lst_first.begin();
+  s21_it++;
+  std_it++;
+  s21_lst_first.splice(s21_it, s21_lst_second);
+  std_lst_first.splice(std_it, std_lst_second);
 
-// TEST(List, Splice_To_Middle) {
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
 
-// TEST(List, Splice_Receiving_List_Is_Empty) {
+TEST(List, Splice_Set_Of_Elements_To_Front) {
+  s21::List<int> s21_lst_first = {1, 2};
+  s21::List<int> s21_lst_second = {4, 5, 6};
+  std::list<int> std_lst_first = {1, 2};
+  std::list<int> std_lst_second = {4, 5, 6};
+  s21::List<int>::iterator s21_it = s21_lst_first.begin();
+  std::list<int>::iterator std_it = std_lst_first.begin();
 
-// TEST(List, Splice_Accepted_List_Is_Empty)) {
+  s21_lst_first.splice(s21_it, s21_lst_second);
+  std_lst_first.splice(std_it, std_lst_second);
 
-// TEST(List, Splice_Both_Lists_Are_Empty) {
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
 
-// TEST(List, Splice_With_Iterator_Not_Of_This_List) {
+TEST(List, Splice_Set_Of_Elements_To_Back) {
+  s21::List<int> s21_lst_first = {1, 2};
+  s21::List<int> s21_lst_second = {4, 5, 6};
+  std::list<int> std_lst_first = {1, 2};
+  std::list<int> std_lst_second = {4, 5, 6};
+  s21::List<int>::iterator s21_it = s21_lst_first.end();
+  std::list<int>::iterator std_it = std_lst_first.end();
 
-// TEST(List, Merge) {
-//   s21::List<int> s21_lst_first = {3, 6};
-//   s21::List<int> s21_lst_second = {1, 2, 3, 4, 5};
-//   std::list<int> std_lst_first = {3, 6};
-//   std::list<int> std_lst_second = {1, 2, 3, 4, 5};
-//   s21_lst_first.merge(s21_lst_second);
-//   std_lst_first.merge(std_lst_second);
-//   EXPECT_EQ(s21_lst_first.front(), std_lst_first.front());
-//   EXPECT_EQ(s21_lst_first.back(), std_lst_first.back());
-//   EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
-// }
+  s21_lst_first.splice(s21_it, s21_lst_second);
+  std_lst_first.splice(std_it, std_lst_second);
+
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
+
+TEST(List, Splice_Set_Of_Elements_To_Middle) {
+  s21::List<int> s21_lst_first = {1, 2};
+  s21::List<int> s21_lst_second = {4, 5, 6};
+  std::list<int> std_lst_first = {1, 2};
+  std::list<int> std_lst_second = {4, 5, 6};
+  s21::List<int>::iterator s21_it = s21_lst_first.begin();
+  std::list<int>::iterator std_it = std_lst_first.begin();
+  s21_it++;
+  std_it++;
+
+  s21_lst_first.splice(s21_it, s21_lst_second);
+  std_lst_first.splice(std_it, std_lst_second);
+
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
+
+TEST(List, Splice_Receiving_List_Is_Empty) {
+  s21::List<int> s21_lst_first = {1, 2};
+  s21::List<int> s21_lst_second;
+  std::list<int> std_lst_first = {1, 2};
+  std::list<int> std_lst_second;
+  s21::List<int>::iterator s21_it = s21_lst_first.begin();
+  std::list<int>::iterator std_it = std_lst_first.begin();
+
+  s21_lst_first.splice(s21_it, s21_lst_second);
+  std_lst_first.splice(std_it, std_lst_second);
+
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
+
+TEST(List, Splice_Accepted_List_Is_Empty) {
+  s21::List<int> s21_lst_first;
+  s21::List<int> s21_lst_second = {4, 5, 6};
+  std::list<int> std_lst_first;
+  std::list<int> std_lst_second = {4, 5, 6};
+  s21::List<int>::iterator s21_it = s21_lst_first.begin();
+  std::list<int>::iterator std_it = std_lst_first.begin();
+
+  s21_lst_first.splice(s21_it, s21_lst_second);
+  std_lst_first.splice(std_it, std_lst_second);
+
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
+
+TEST(List, Splice_Both_Lists_Are_Empty) {
+  s21::List<int> s21_lst_first;
+  s21::List<int> s21_lst_second;
+  std::list<int> std_lst_first;
+  std::list<int> std_lst_second;
+  s21::List<int>::iterator s21_it = s21_lst_first.begin();
+  std::list<int>::iterator std_it = std_lst_first.begin();
+
+  s21_lst_first.splice(s21_it, s21_lst_second);
+  std_lst_first.splice(std_it, std_lst_second);
+
+  EXPECT_EQ(s21_lst_first.empty(), std_lst_first.empty());
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
+
+TEST(List, Splice_With_Iterator_Not_Of_This_List) {
+  s21::List<int> s21_lst1{1, 2};
+  s21::List<int> s21_lst2{3};
+  s21::List<int>::iterator s21_it2 = s21_lst2.begin();
+  s21_lst1.splice(s21_it2, s21_lst2);
+
+  s21::List<int>::iterator s21_it_check = s21_lst1.begin();
+  EXPECT_EQ(*s21_it_check, 1);
+  s21_it_check++;
+  EXPECT_EQ(*s21_it_check, 2);
+  s21_it_check++;
+  EXPECT_EQ(*s21_it_check, DATA_IN_END_NODE);
+  EXPECT_EQ(s21_lst1.size(), 2);
+  EXPECT_EQ(s21_lst2.size(), 1);
+}
+
+TEST(List, Merge_Both_Have_One_Element) {
+  s21::List<int> s21_lst_first = {3};
+  s21::List<int> s21_lst_second = {1};
+  std::list<int> std_lst_first = {3};
+  std::list<int> std_lst_second = {1};
+  s21_lst_first.merge(s21_lst_second);
+  std_lst_first.merge(std_lst_second);
+
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
+
+TEST(List, Merge_Sets_Of_Elements) {
+  s21::List<int> s21_lst_first = {3, 8, 10};
+  s21::List<int> s21_lst_second = {-10, 1, 2, 6, 100};
+  std::list<int> std_lst_first = {3, 8, 10};
+  std::list<int> std_lst_second = {-10, 1, 2, 6, 100};
+  s21_lst_first.merge(s21_lst_second);
+  std_lst_first.merge(std_lst_second);
+
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
+
+TEST(List, Merge_Receiving_List_Is_Empty) {
+  s21::List<int> s21_lst_first;
+  s21::List<int> s21_lst_second = {1, 3};
+  std::list<int> std_lst_first;
+  std::list<int> std_lst_second = {1, 3};
+  s21_lst_first.merge(s21_lst_second);
+  std_lst_first.merge(std_lst_second);
+
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
+
+TEST(List, Merge_Accepted_List_Is_Empty) {
+  s21::List<int> s21_lst_first = {2, 4};
+  s21::List<int> s21_lst_second;
+  std::list<int> std_lst_first = {2, 4};
+  std::list<int> std_lst_second;
+  s21_lst_first.merge(s21_lst_second);
+  std_lst_first.merge(std_lst_second);
+
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
+
+TEST(List, Merge_Both_Lists_Are_Empty) {
+  s21::List<int> s21_lst_first;
+  s21::List<int> s21_lst_second;
+  std::list<int> std_lst_first;
+  std::list<int> std_lst_second;
+  s21_lst_first.merge(s21_lst_second);
+  std_lst_first.merge(std_lst_second);
+
+  EXPECT_EQ(s21_lst_first.empty(), std_lst_first.empty());
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
 
 // TEST(List, Reverse) {
 //   s21::List<int> s21_lst = {1, 2, 3, 4, 5};
