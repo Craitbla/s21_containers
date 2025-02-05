@@ -622,27 +622,6 @@ template <class T> void List<T>::reverse() {
         it_b--;
       }
     }
-    // List<T> *new_list = new List<T>;
-    // node<T> *old_next = this->begin_->next_;
-    // node<T> *new_next = new_list->end_;
-
-    // for (size_type i = 0; i < size_; i++) {
-    //   new_next->prev_ = old_next->prev_;
-    //   new_list->begin_ = new_next->prev_;
-    //   new_list->begin_->prev_ = nullptr;
-    //   new_list->begin_->next_ = new_next;
-    //   old_next = old_next->next_;
-    //   new_next = new_next->prev_;
-    //   new_list->size_++;
-    // }
-    // node<T> *pen_node = new_list->end_->prev_;
-    // new_list->end_ = (*this).end_;
-
-    // new_list->end_->prev_ = pen_node;
-    // pen_node->next_ = new_list->end_;
-
-    // (*this).defoult();
-    // (*this) = *new_list;
   }
 }
 
@@ -697,16 +676,20 @@ typename List<T>::iterator List<T>::insert_many(const_iterator pos,
 template <class T>
 template <class... Args>
 void List<T>::insert_many_back(Args &&...args) {
-  for (const auto &arg : {args...}) {
-    push_back(arg);
+  if constexpr (sizeof...(args) > 0) {
+    for (const auto &arg : {std::forward<Args>(args)...}) {
+      push_back(arg);
+    }
   }
 }
 
 template <class T>
 template <class... Args>
 void List<T>::insert_many_front(Args &&...args) {
-  for (const auto &arg : {args...}) {
-    push_front(arg);
+  if constexpr (sizeof...(args) > 0) {
+    for (const auto &arg : {std::forward<Args>(args)...}) {
+      push_front(arg);
+    }
   }
 }
 
