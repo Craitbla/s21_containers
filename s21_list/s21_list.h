@@ -220,6 +220,9 @@ public:
 
   void clear_del();
   void clear();
+
+  bool check_iterator_membership_to_list(const_iterator pos);
+
   iterator insert(iterator pos, const_reference value);
   void erase(iterator pos);
   void push_back(const_reference value);
@@ -417,6 +420,19 @@ template <class T> void List<T>::clear() {
   while (!(*this).empty()) {
     this->pop_front();
   }
+}
+
+template <class T>
+bool List<T>::check_iterator_membership_to_list(const_iterator pos) {
+  bool check_flag = false;
+  auto check_it = (*this).begin();
+  for (size_type i{1}; i <= (*this).size() + 1; i++) {
+    if (pos.p_node_ == check_it.p_node_) {
+      check_flag = true;
+    }
+    check_it++;
+  }
+  return check_flag;
 }
 
 template <class T>
@@ -665,12 +681,24 @@ template <class T>
 template <class... Args>
 typename List<T>::iterator List<T>::insert_many(const_iterator pos,
                                                 Args &&...args) {
-  iterator it;
-  it.p_node_ = pos.p_node_;
-  for (const auto &arg : {args...}) {
-    insert(it, arg);
+  iterator ret_it;
+  ret_it.p_node_ = pos.p_node_;
+  if constexpr (sizeof...(args) > 0) {
+    if (check_iterator_membership_to_list(pos) == true) {
+      iterator pos_it;
+      pos_it.p_node_ = pos.p_node_;
+      bool flag_beg = true;
+      for (const auto &arg : {std::forward<Args>(args)...}) {
+        insert(pos_it, arg);
+        if (flag_beg == true) {
+          ret_it.p_node_ = pos_it.p_node_;
+          ret_it--;
+          flag_beg = false;
+        }
+      }
+    }
   }
-  return it;
+  return ret_it;
 }
 
 template <class T>

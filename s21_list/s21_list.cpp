@@ -19,20 +19,40 @@
 
 // std::cout << "\n" << *(++std_lst.begin()) << *(++s21_lst.begin()) << "\n";
 int main() {
+
   s21::List<int> s21_lst = {1, 2};
-  s21::List<int>::iterator s21_it = s21_lst.begin();
-  ++s21_it;
-  s21::List<int>::iterator s21_new_it = s21_lst.insert_many(s21_it, 3, 4, 5); //
-  s21::List<int> rez_lst = {1, 3, 4, 5, 2};
+  s21::List<int>::iterator s21_it = s21_lst.end();
+  s21::List<int>::iterator s21_new_it = s21_lst.insert_many(s21_it, 3);
+  s21::List<int> rez_lst = {1, 2, 3};
 
   s21::List<int>::iterator rez_it_check = rez_lst.begin();
-
   for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
        s21_it_check++) {
-    std::cout << *s21_it_check << " \t";
+    std::cout << *rez_it_check << "\t" << *s21_it_check << "\n";
+    rez_it_check++;
   }
-  std::cout << " \n\n\n" << *s21_it << " \n\n\n";
-  std::cout << *s21_new_it << " \n\n\n";
+  std::cout << *s21_new_it;    // 3
+  std::cout << s21_lst.size(); // 2
+
+  // ///////
+  // s21::List<int> s21_lst1{1, 2};
+  // s21::List<int> s21_lst2{10};
+  // s21::List<int>::iterator s21_it2 = s21_lst2.begin();
+  // s21::List<int>::iterator s21_new_it = s21_lst1.insert_many(s21_it2);
+  // s21::List<int> rez_lst = {1, 2};
+
+  // s21::List<int>::iterator rez_it_check = rez_lst.begin();
+  // for (auto s21_it_check = s21_lst1.begin(); s21_it_check != s21_lst1.end();
+  //      s21_it_check++) {
+  //   std::cout << *rez_it_check << "\t" << *s21_it_check << "\n";
+  //   rez_it_check++;
+  // }
+  // std::cout << " \n\n\n" << *s21_new_it;
+  // std::cout << " \n\n\n" <<
+  // s21_lst1.check_iterator_membership_to_list(s21_it2);
+  ///
+  // std::cout << " \n\n\n" << *s21_it2 << " \n\n\n";
+  // std::cout << *s21_new_it << " \n\n\n";
   // s21::List<int> s21_lst_first = {3, 8, 10};
   // s21::List<int> s21_lst_second = {-10, 1, 2, 6, 100};
   // std::list<int> std_lst_first = {3, 8, 10};
@@ -85,7 +105,8 @@ int main() {
   //    std::list<int>::iterator std_it = std_lst_first.begin();
   //    s21_lst_first.splice(s21_it, s21_lst_second);
   //    std_lst_first.splice(std_it, std_lst_second);
-  //    for (auto it = s21_lst_first.begin(); it != s21_lst_first.end(); it++)
+  //    for (auto it = s21_lst_first.begin(); it != s21_lst_first.end();
+  //    it++)
   //    {
   //      std::cout << *it << " \t";
   //    }
@@ -97,7 +118,8 @@ int main() {
   //    }
   //    std::cout << "s21_lst_second\n";
 
-  //   for (auto it = std_lst_first.begin(); it != std_lst_first.end(); it++)
+  //   for (auto it = std_lst_first.begin(); it != std_lst_first.end();
+  //   it++)
   //   {
   //     std::cout << *it << " \t";
   //   }
@@ -166,15 +188,18 @@ int main() {
   // // std_lst_first.merge(std_lst_second);
   // // std::cout << "\n\n";
   // // ничегошеньки в секонд и все в ферст
-  // for (auto it = s21_lst_first.begin(); it != s21_lst_first.end(); it++) {
-  //   std::cout << *it << "\t";
-  // }
-  // std::cout << "\n";
-  // for (auto it = s21_lst_second.begin(); it != s21_lst_second.end(); it++)
+  // for (auto it = s21_lst_first.begin(); it != s21_lst_first.end(); it++)
   // {
   //   std::cout << *it << "\t";
   // }
-  // for (auto it = std_lst_second.begin(); it != std_lst_second.end(); it++)
+  // std::cout << "\n";
+  // for (auto it = s21_lst_second.begin(); it != s21_lst_second.end();
+  // it++)
+  // {
+  //   std::cout << *it << "\t";
+  // }
+  // for (auto it = std_lst_second.begin(); it != std_lst_second.end();
+  // it++)
   // {
   //   std::cout << *it << "\t";
   // }
