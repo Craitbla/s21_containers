@@ -240,7 +240,7 @@ TEST(List, Insert_To_Empty) {
   EXPECT_EQ(s21_lst.back(), std_lst.back());
 }
 
-TEST(List, Insert_To_Front) { // ок
+TEST(List, Insert_To_Front) {
   s21::List<int> s21_lst;
   std::list<int> std_lst;
   s21::List<int>::iterator s21_it;
@@ -263,7 +263,7 @@ TEST(List, Insert_To_Front) { // ок
   EXPECT_EQ(s21_lst.size(), std_lst.size());
 }
 
-TEST(List, Insert_To_Back) { // ок
+TEST(List, Insert_To_Back) {
   s21::List<int> s21_lst;
   std::list<int> std_lst;
   s21::List<int>::iterator s21_it;
@@ -589,6 +589,44 @@ TEST(List, Splice_With_Iterator_Not_Of_This_List) {
   EXPECT_EQ(s21_lst2.size(), 1);
 }
 
+TEST(List, Merge_Receiving_List_Have_One_Element) {
+  s21::List<int> s21_lst_first = {2};
+  s21::List<int> s21_lst_second = {1, 3, 4};
+  std::list<int> std_lst_first = {2};
+  std::list<int> std_lst_second = {1, 3, 4};
+  s21_lst_first.merge(s21_lst_second);
+  std_lst_first.merge(std_lst_second);
+
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
+
+TEST(List, Merge_Accepted_List_Have_One_Element) {
+  s21::List<int> s21_lst_first = {1, 3, 4};
+  s21::List<int> s21_lst_second = {2};
+  std::list<int> std_lst_first = {1, 3, 4};
+  std::list<int> std_lst_second = {2};
+  s21_lst_first.merge(s21_lst_second);
+  std_lst_first.merge(std_lst_second);
+
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
+
 TEST(List, Merge_Both_Have_One_Element) {
   s21::List<int> s21_lst_first = {3};
   s21::List<int> s21_lst_second = {1};
@@ -613,6 +651,25 @@ TEST(List, Merge_Sets_Of_Elements) {
   s21::List<int> s21_lst_second = {-10, 1, 2, 6, 100};
   std::list<int> std_lst_first = {3, 8, 10};
   std::list<int> std_lst_second = {-10, 1, 2, 6, 100};
+  s21_lst_first.merge(s21_lst_second);
+  std_lst_first.merge(std_lst_second);
+
+  std::list<int>::iterator std_it_check = std_lst_first.begin();
+  for (auto s21_it_check = s21_lst_first.begin();
+       s21_it_check != s21_lst_first.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst_second.empty(), std_lst_second.empty());
+  EXPECT_EQ(s21_lst_first.size(), std_lst_first.size());
+  EXPECT_EQ(s21_lst_second.size(), std_lst_second.size());
+}
+
+TEST(List, Merge_Sets_Of_Elements_With_Repetitions) {
+  s21::List<int> s21_lst_first = {3, 8, 10, 10};
+  s21::List<int> s21_lst_second = {-10, 1, 2, 3, 6, 8, 10, 100};
+  std::list<int> std_lst_first = {3, 8, 10, 10};
+  std::list<int> std_lst_second = {-10, 1, 2, 3, 6, 8, 10, 100};
   s21_lst_first.merge(s21_lst_second);
   std_lst_first.merge(std_lst_second);
 
@@ -699,7 +756,22 @@ TEST(List, Reverse_Two_Elements) {
   EXPECT_EQ(s21_lst.size(), std_lst.size());
 }
 
-TEST(List, Reverse_Set_Of_Elements) {
+TEST(List, Reverse_Set_Of_Elements_Even_Number) {
+  s21::List<int> s21_lst = {1, 2, 3, 4, 5, 6};
+  std::list<int> std_lst = {1, 2, 3, 4, 5, 6};
+  s21_lst.reverse();
+  std_lst.reverse();
+
+  std::list<int>::iterator std_it_check = std_lst.begin();
+  for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
+       s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst.size(), std_lst.size());
+}
+
+TEST(List, Reverse_Set_Of_Elements_Odd_Number) {
   s21::List<int> s21_lst = {1, 2, 3, 4, 5};
   std::list<int> std_lst = {1, 2, 3, 4, 5};
   s21_lst.reverse();
@@ -789,13 +861,6 @@ TEST(List, Unique_Empty_List) {
   EXPECT_EQ(s21_lst.size(), std_lst.size());
 }
 
-// 1
-// 2
-// по порядку изначально
-// большой сет беспорядочный
-// сет еще больше
-// пустой лист
-
 TEST(List, Sort_One_Element) {
   s21::List<int> s21_lst = {1};
   std::list<int> std_lst = {1};
@@ -852,11 +917,25 @@ TEST(List, Sort_Set_Of_Elements) {
   EXPECT_EQ(s21_lst.size(), std_lst.size());
 }
 
-TEST(List, Sort_Large_Number_Of_Elements) {
-  s21::List<int> s21_lst = {-45, 78,  34, -12, 56, -89, 0,  23,  -67, 91,
-                            45,  -34, 67, -78, 12, -56, 89, -23, 100, -1};
-  std::list<int> std_lst = {-45, 78,  34, -12, 56, -89, 0,  23,  -67, 91,
-                            45,  -34, 67, -78, 12, -56, 89, -23, 100, -1};
+TEST(List, Sort_Set_Of_Elements_With_Repetitions) {
+  s21::List<int> s21_lst = {2, 3, 8, 3, 3, 3, 2, 5, 1, 8, 6};
+  std::list<int> std_lst = {2, 3, 8, 3, 3, 3, 2, 5, 1, 8, 6};
+  s21_lst.sort();
+  std_lst.sort();
+  std::list<int>::iterator std_it_check = std_lst.begin();
+  for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
+       s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst.size(), std_lst.size());
+}
+
+TEST(List, Sort_Large_Number_Of_Elements_With_Repetitions) {
+  s21::List<int> s21_lst = {45, 78,  34, 34,  -12, 56,  -89, 0,   23,  -67, 91,
+                            45, -34, 67, -78, 12,  -56, 89,  -23, 100, -1};
+  std::list<int> std_lst = {45, 78,  34, 34,  -12, 56,  -89, 0,   23,  -67, 91,
+                            45, -34, 67, -78, 12,  -56, 89,  -23, 100, -1};
   s21_lst.sort();
   std_lst.sort();
   std::list<int>::iterator std_it_check = std_lst.begin();
@@ -885,12 +964,12 @@ TEST(List, Sort_Empty_List) {
 // если начальный лист пустой
 // если итератор не из этого листа
 
-TEST(List, Insert_Many) {
-  s21::List<int> s21_lst = {1, 2, 3, 4, 5};
+TEST(List, Insert_Many_One_Element_To_Front) { //new it
+  s21::List<int> s21_lst = {1, 2};
   s21::List<int>::iterator s21_it = s21_lst.begin();
   ++s21_it;
-  s21_lst.insert_many(s21_it, 7, 8, 9);
-  s21::List<int> rez_lst = {1, 7, 8, 9, 2, 3, 4, 5};
+  s21::List<int>::iterator s21_new_it = s21_lst.insert_many(s21_it, 3, 4, 5); //
+  s21::List<int> rez_lst = {1, 3, 4, 5, 2};
 
   s21::List<int>::iterator rez_it_check = rez_lst.begin();
   for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
@@ -901,13 +980,31 @@ TEST(List, Insert_Many) {
   EXPECT_EQ(s21_lst.size(), rez_lst.size());
 }
 
-// TEST(List, Insert_Many_To_Front) {
+// TEST(List, Insert_Many_One_Element_To_Back) {
 
-// TEST(List, Insert_Many_To_Back) {
+// TEST(List, Insert_Many_One_Element_To_Middle) {
 
-// TEST(List, Insert_Many_To_Middle) {
+// TEST(List, Insert_Many_Set_Of_Elements_To_Front) {
 
-// TEST(List, Insert_Many_One_Element) {
+// TEST(List, Insert_Many_Set_Of_Elements_To_Back) {
+
+TEST(List, Insert_Many_Set_Of_Elements_To_Middle) {
+  s21::List<int> s21_lst = {1, 2};
+  s21::List<int>::iterator s21_it = s21_lst.begin();
+  ++s21_it;
+  s21_lst.insert_many(s21_it, 3, 4, 5);
+  s21::List<int> rez_lst = {1, 3, 4, 5, 2};
+
+  s21::List<int>::iterator rez_it_check = rez_lst.begin();
+  for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
+       s21_it_check++) {
+    EXPECT_EQ(*rez_it_check, *s21_it_check);
+    rez_it_check++;
+  }
+  EXPECT_EQ(s21_lst.size(), rez_lst.size());
+}
+
+///
 
 // TEST(List, Insert_Many_Empty_Iterator_Arg) {
 
