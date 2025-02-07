@@ -303,17 +303,18 @@ TEST(List, Insert_To_Middle) {
   EXPECT_EQ(s21_lst.size(), std_lst.size());
 }
 
-TEST(List, Insert_With_Iterator_Not_Of_This_List) {
+TEST(List, Insert_With_Iterator_Not_Of_This_List) { /// вопросы к s21_new_it
   s21::List<int> s21_lst1{1, 2};
   s21::List<int> s21_lst2{3};
   s21::List<int>::iterator s21_it2 = s21_lst2.begin();
-  s21_lst1.insert(s21_it2, 10);
+  s21::List<int>::iterator s21_new_it = s21_lst1.insert(s21_it2, 10);
   s21::List<int>::iterator s21_it_check = s21_lst1.begin();
   EXPECT_EQ(*s21_it_check, 1);
   s21_it_check++;
   EXPECT_EQ(*s21_it_check, 2);
   s21_it_check++;
   EXPECT_EQ(*s21_it_check, DATA_IN_END_NODE);
+  EXPECT_EQ(*s21_new_it, *s21_it2);
   EXPECT_EQ(s21_lst1.size(), 2);
 }
 
