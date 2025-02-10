@@ -20,19 +20,8 @@
 // std::cout << "\n" << *(++std_lst.begin()) << *(++s21_lst.begin()) << "\n";
 int main() {
 
-  s21::List<int> s21_lst = {1, 2};
-  s21::List<int>::iterator s21_it = s21_lst.end();
-  s21::List<int>::iterator s21_new_it = s21_lst.insert_many(s21_it, 3);
-  s21::List<int> rez_lst = {1, 2, 3};
-
-  s21::List<int>::iterator rez_it_check = rez_lst.begin();
-  for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
-       s21_it_check++) {
-    std::cout << *rez_it_check << "\t" << *s21_it_check << "\n";
-    rez_it_check++;
-  }
-  std::cout << *s21_new_it;    // 3
-  std::cout << s21_lst.size(); // 2
+  std::list<int> s21_lst;
+  std::cout << s21_lst.back(); // 2
 
   // ///////
   // s21::List<int> s21_lst1{1, 2};

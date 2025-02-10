@@ -6,30 +6,48 @@
 
 #include <list>
 
-TEST(List, Constructor_Default) {
+TEST(List, Constructor_Default_And_Empty) {
   s21::List<int> s21_lst;
   std::list<int> std_lst;
   EXPECT_EQ(s21_lst.empty(), std_lst.empty());
   EXPECT_EQ(s21_lst.size(), std_lst.size());
 }
 
-TEST(List, Constructor_Size) {
-  s21::List<int> s21_lst(8);
-  std::list<int> std_lst(8);
+TEST(List, Not_Empty) {
+  s21::List<int> s21_lst{1, 2};
+  std::list<int> std_lst{1, 2};
+  EXPECT_EQ(s21_lst.empty(), std_lst.empty());
+}
+
+TEST(List, Size) {
+  s21::List<int> s21_lst = {1, 2, 3};
+  std::list<int> std_lst = {1, 2, 3};
   EXPECT_EQ(s21_lst.size(), std_lst.size());
 }
 
-TEST(List, Constructor_Zeroes) {
-  s21::List<int> s21_lst(2);
-  std::list<int> std_lst(2);
-  EXPECT_EQ(s21_lst.front(), std_lst.front());
+TEST(List, Constructor_Size_And_Zeroes) {
+  s21::List<int> s21_lst(8);
+  std::list<int> std_lst(8);
+
+  std::list<int>::iterator std_it_check = std_lst.begin();
+  for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
+       s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
+  EXPECT_EQ(s21_lst.size(), std_lst.size());
 }
 
 TEST(List, Constructor_List) {
   s21::List<int> s21_lst = {1, 2, 3};
   std::list<int> std_lst = {1, 2, 3};
-  EXPECT_EQ(s21_lst.front(), std_lst.front());
-  EXPECT_EQ(s21_lst.back(), std_lst.back());
+
+  std::list<int>::iterator std_it_check = std_lst.begin();
+  for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
+       s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
   EXPECT_EQ(s21_lst.size(), std_lst.size());
 }
 
@@ -38,8 +56,13 @@ TEST(List, Constructor_Copy) {
   std::list<int> std_lst = {1, 2, 3};
   s21::List<int> s21_copy_lst(s21_lst);
   std::list<int> std_copy_lst(std_lst);
-  EXPECT_EQ(s21_copy_lst.front(), std_copy_lst.front());
-  EXPECT_EQ(s21_copy_lst.back(), std_copy_lst.back());
+
+  std::list<int>::iterator std_it_check = std_copy_lst.begin();
+  for (auto s21_it_check = s21_copy_lst.begin();
+       s21_it_check != s21_copy_lst.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
   EXPECT_EQ(s21_copy_lst.size(), std_copy_lst.size());
 }
 
@@ -50,8 +73,12 @@ TEST(List, Operator_Copy) {
   s21_copy_lst = s21_lst;
   std::list<int> std_copy_lst;
   std_copy_lst = std_lst;
-  EXPECT_EQ(s21_copy_lst.front(), std_copy_lst.front());
-  EXPECT_EQ(s21_copy_lst.back(), std_copy_lst.back());
+  std::list<int>::iterator std_it_check = std_copy_lst.begin();
+  for (auto s21_it_check = s21_copy_lst.begin();
+       s21_it_check != s21_copy_lst.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
   EXPECT_EQ(s21_copy_lst.size(), std_copy_lst.size());
 }
 
@@ -60,8 +87,13 @@ TEST(List, Constructor_Move) {
   std::list<int> std_lst = {1, 2, 3};
   s21::List<int> s21_copy_lst(std::move(s21_lst));
   std::list<int> std_copy_lst(std::move(std_lst));
-  EXPECT_EQ(s21_copy_lst.front(), std_copy_lst.front());
-  EXPECT_EQ(s21_copy_lst.back(), std_copy_lst.back());
+
+  std::list<int>::iterator std_it_check = std_copy_lst.begin();
+  for (auto s21_it_check = s21_copy_lst.begin();
+       s21_it_check != s21_copy_lst.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
   EXPECT_EQ(s21_lst.empty(), std_lst.empty());
   EXPECT_EQ(s21_lst.size(), std_lst.size());
   EXPECT_EQ(s21_copy_lst.size(), std_copy_lst.size());
@@ -74,17 +106,52 @@ TEST(List, Operator_Move) {
   s21_copy_lst = std::move(s21_lst);
   std::list<int> std_copy_lst;
   std_copy_lst = std::move(std_lst);
-  EXPECT_EQ(s21_copy_lst.front(), std_copy_lst.front());
-  EXPECT_EQ(s21_copy_lst.back(), std_copy_lst.back());
+
+  std::list<int>::iterator std_it_check = std_copy_lst.begin();
+  for (auto s21_it_check = s21_copy_lst.begin();
+       s21_it_check != s21_copy_lst.end(); s21_it_check++) {
+    EXPECT_EQ(*std_it_check, *s21_it_check);
+    std_it_check++;
+  }
   EXPECT_EQ(s21_lst.empty(), std_lst.empty());
   EXPECT_EQ(s21_lst.size(), std_lst.size());
   EXPECT_EQ(s21_copy_lst.size(), std_copy_lst.size());
 }
 
-TEST(List, Size) {
-  s21::List<int> s21_lst = {1, 2, 3};
-  std::list<int> std_lst = {1, 2, 3};
-  EXPECT_EQ(s21_lst.size(), std_lst.size());
+TEST(List, Back_Set_Of_Elements) {
+  s21::List<int> s21_lst{1, 2, 3};
+  std::list<int> std_lst{1, 2, 3};
+  EXPECT_EQ(s21_lst.back(), std_lst.back());
+}
+
+TEST(List, Back_One_Element) {
+  s21::List<int> s21_lst{1};
+  std::list<int> std_lst{1};
+  EXPECT_EQ(s21_lst.back(), std_lst.back());
+}
+
+TEST(List, Back_Empty_List) {
+  s21::List<int> s21_lst;
+  std::list<int> std_lst;
+  EXPECT_EQ(s21_lst.back(), std_lst.back());
+}
+
+TEST(List, Front_Set_Of_Elements) {
+  s21::List<int> s21_lst{1, 2, 3};
+  std::list<int> std_lst{1, 2, 3};
+  EXPECT_EQ(s21_lst.front(), std_lst.front());
+}
+
+TEST(List, Front_One_Element) {
+  s21::List<int> s21_lst{1};
+  std::list<int> std_lst{1};
+  EXPECT_EQ(s21_lst.front(), std_lst.front());
+}
+
+TEST(List, Front_Empty_List) {
+  s21::List<int> s21_lst;
+  std::list<int> std_lst;
+  EXPECT_EQ(s21_lst.front(), std_lst.front());
 }
 
 TEST(List, Push_Front) {
@@ -173,7 +240,7 @@ TEST(List, Iterator_Begin) {
   EXPECT_EQ(*s21_it, *std_it);
 }
 
-TEST(List, Iterator_BeginPlusAndMinus) {
+TEST(List, Iterator_Begin_Plus_And_Minus) {
   s21::List<int> s21_lst = {1, 2, 3};
   std::list<int> std_lst = {1, 2, 3};
   s21::List<int>::iterator s21_it;

@@ -51,7 +51,6 @@ public:
   List(List &&l);
   ~List();
 
-  // СЕГА
   List &operator=(List &&l) noexcept {
     if (this != &l) {
       if (!(*this).empty() || this->end_ != nullptr) {
@@ -241,7 +240,7 @@ public:
   template <class... Args> void insert_many_back(Args &&...args);
   template <class... Args> void insert_many_front(Args &&...args);
 
-  bool iterator_apply(iterator it);
+  // bool iterator_apply(iterator it);
   void swap_nodes_by_iterators(iterator &it_a, iterator &it_b,
                                bool iterator_remain_flag);
   void swap_beg_and_com(iterator &it_beg, iterator &it_com);
@@ -438,12 +437,11 @@ bool List<T>::check_iterator_membership_to_list(const_iterator pos) {
 template <class T>
 typename List<T>::iterator List<T>::insert(List<T>::iterator pos,
                                            const T &value) {
-
   if (!(*this).check_iterator_membership_to_list(pos)) {
     return pos;
   }
-  iterator it;
 
+  iterator it;
   if (pos == (*this).begin()) {
     (*this).push_front(value);
     it = (*this).begin();
@@ -451,7 +449,6 @@ typename List<T>::iterator List<T>::insert(List<T>::iterator pos,
     (*this).push_back(value);
     it = --((*this).end());
   } else {
-
     node<T> *prev_node = pos.p_node_->prev_;
     node<T> *new_node = new node<value_type>(value, prev_node, pos.p_node_);
     prev_node->next_ = new_node;
@@ -460,9 +457,7 @@ typename List<T>::iterator List<T>::insert(List<T>::iterator pos,
     it.p_node_ = new_node;
     (*this).size_++;
   }
-
   pos.p_node_ = it.p_node_;
-
   return it;
 }
 
@@ -470,6 +465,8 @@ template <class T> void List<T>::erase(iterator pos) { // доработка
   if ((*this).empty()) {
     throw "It is impossible to remove an element from an empty list";
   }
+  if (!(*this).check_iterator_membership_to_list(pos))
+    return;
   if (pos == (*this).begin()) {
     (*this).pop_front();
   } else if (pos == --(*this).end()) {
@@ -565,19 +562,21 @@ template <class T> void List<T>::merge(List &other) {
   sort();
 }
 
-template <class T> bool List<T>::iterator_apply(iterator it) {
-  bool flag = 0;
-  node<T> *tmp_node = this->begin_;
-  while ((tmp_node != it.p_node_) && (tmp_node != nullptr)) {
-    tmp_node = tmp_node->next_;
-  }
-  if (tmp_node != nullptr) {
-    flag = 1;
-  }
-  return flag;
-}
+// template <class T> bool List<T>::iterator_apply(iterator it) {
+//   bool flag = 0;
+//   node<T> *tmp_node = this->begin_;
+//   while ((tmp_node != it.p_node_) && (tmp_node != nullptr)) {
+//     tmp_node = tmp_node->next_;
+//   }
+//   if (tmp_node != nullptr) {
+//     flag = 1;
+//   }
+//   return flag;
+// }
 
 template <class T> void List<T>::splice(const_iterator pos, List &other) {
+  if (!(*this).check_iterator_membership_to_list(pos))
+    return;
   if (!other.empty()) {
     node<T> *next_node = this->begin_;
     while ((next_node != pos.p_node_) && (next_node != nullptr)) {
