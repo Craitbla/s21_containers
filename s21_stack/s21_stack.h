@@ -4,7 +4,7 @@
 #include "../s21_list/s21_list.h"
 
 namespace s21 {
-template <class T> class Stack : protected List<T> {
+template <class T> class Stack : private List<T> {
 public:
   using value_type = T;
   using reference = T &;

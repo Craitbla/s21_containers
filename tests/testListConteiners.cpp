@@ -1,15 +1,62 @@
 // #ifndef TESTLISTCONTEINERS_H
 // #define TESTLISTCONTEINERS_H
-#include <gtest/gtest.h>
 
 #include "testListConteiners.h"
 
-#include <list>
+struct Point {
+  int x, y;
+  bool operator==(const Point &other) const {
+    return x == other.x && y == other.y;
+  }
+};
 
-TEST(List, Constructor_Default_And_Empty) {
-  s21::List<int> s21_lst;
-  std::list<int> std_lst;
+using TestTypes =
+    ::testing::Types<int, double, char, std::string, std::vector<int>, Point>;
+template <typename T> class ListTypedTest : public ::testing::Test {};
+TYPED_TEST_SUITE(ListTypedTest, TestTypes);
+
+TYPED_TEST(ListTypedTest, Constructor_Default_And_Empty) {
+  s21::List<TypeParam> s21_lst;
+  std::list<TypeParam> std_lst;
   EXPECT_EQ(s21_lst.empty(), std_lst.empty());
+  EXPECT_EQ(s21_lst.size(), std_lst.size());
+}
+
+TYPED_TEST(ListTypedTest, Push_Back_And_Front) {
+  s21::List<TypeParam> s21_lst;
+  std::list<TypeParam> std_lst;
+  TypeParam value{};
+  s21_lst.push_back(value);
+  std_lst.push_back(value);
+  EXPECT_EQ(s21_lst.back(), std_lst.back());
+  EXPECT_EQ(s21_lst.front(), std_lst.front());
+  s21_lst.push_front(value);
+  std_lst.push_front(value);
+  EXPECT_EQ(s21_lst.back(), std_lst.back());
+  EXPECT_EQ(s21_lst.front(), std_lst.front());
+  EXPECT_EQ(s21_lst.size(), std_lst.size());
+}
+
+TYPED_TEST(ListTypedTest, Copy_And_Move) {
+  s21::List<TypeParam> s21_lst = {TypeParam{}, TypeParam{}};
+  std::list<TypeParam> std_lst = {TypeParam{}, TypeParam{}};
+  s21::List<TypeParam> s21_copy_lst(s21_lst);
+  std::list<TypeParam> std_copy_lst(std_lst);
+  EXPECT_EQ(s21_copy_lst.size(), std_copy_lst.size());
+  s21::List<TypeParam> s21_move_lst(std::move(s21_lst));
+  std::list<TypeParam> std_move_lst(std::move(std_lst));
+  EXPECT_EQ(s21_move_lst.size(), std_move_lst.size());
+}
+
+TYPED_TEST(ListTypedTest, Insert_And_Erase) {
+  s21::List<TypeParam> s21_lst;
+  std::list<TypeParam> std_lst;
+  TypeParam value{};
+  s21_lst.insert(s21_lst.begin(), value);
+  std_lst.insert(std_lst.begin(), value);
+  EXPECT_EQ(s21_lst.size(), std_lst.size());
+  s21_lst.erase(s21_lst.begin());
+  std_lst.erase(std_lst.begin());
   EXPECT_EQ(s21_lst.size(), std_lst.size());
 }
 
@@ -293,7 +340,7 @@ TEST(List, Сlear) {
   EXPECT_EQ(s21_lst.empty(), std_lst.empty());
   EXPECT_EQ(s21_lst.size(), std_lst.size());
 }
-
+/// ост
 TEST(List, Insert_To_Empty) {
   s21::List<int> s21_lst;
   std::list<int> std_lst;
@@ -1426,7 +1473,7 @@ TEST(Queue, Operator_Move) {
   EXPECT_EQ(s21_queue_int.empty(), std_queue_int.empty());
 }
 
-TEST(Queue, Front_And_Back) { //////////
+TEST(Queue, Front_And_Back) {
   s21::Queue<int> s21_queue_int = {1, 2, 3};
   std::queue<int> std_queue_int;
   std_queue_int.push(1);
@@ -1507,7 +1554,7 @@ TEST(Queue, Swap) {
   }
   EXPECT_EQ(s21_queue_int.empty(), std_queue_int.empty());
 }
-///
+
 TEST(Queue, Insert_Many_Back_One_Element) {
   s21::Queue<int> s21_queue;
   s21_queue.push(1);
@@ -1592,169 +1639,300 @@ TEST(Queue, Insert_Many_Back_Empty_Elements_Arg) {
   }
 }
 
-// ////////////////////////////////////////
+///////////// Stack
 
-// TEST(Stack, Constructor_Default) {
-//   s21::Stack<int> s21_stack;
-//   std::stack<int> std_stack;
-//   EXPECT_EQ(s21_stack.empty(), std_stack.empty());
-// }
+TEST(Stack, Constructor_Default_And_Empty) {
+  s21::Stack<int> s21_stack;
+  std::stack<int> std_stack;
+  EXPECT_EQ(s21_stack.empty(), std_stack.empty());
+  EXPECT_EQ(s21_stack.size(), std_stack.size());
+}
 
-// TEST(Stack, Constructor_List) {
-//   s21::Stack<int> s21_stack = {1, 2, 3};
-//   std::stack<int> std_stack;
-//   std_stack.push(1);
-//   std_stack.push(2);
-//   std_stack.push(3);
-//   EXPECT_EQ(s21_stack.top(), std_stack.top());
-// }
+TEST(Stack, Not_Empty) {
+  s21::Stack<int> s21_stack;
+  s21_stack.push(1);
+  std::stack<int> std_stack;
+  std_stack.push(1);
+  EXPECT_EQ(s21_stack.empty(), std_stack.empty());
+}
 
-// TEST(Stack, Constructor_Copy) {
-//   s21::Stack<int> s21_stack = {1, 2, 3};
-//   s21::Stack<int> s21_copy(s21_stack);
-//   std::stack<int> std_stack;
-//   std_stack.push(1);
-//   std_stack.push(2);
-//   std_stack.push(3);
-//   std::stack<int> std_copy_lst(std_stack);
-//   EXPECT_EQ(s21_copy.top(), std_copy_lst.top());
-// }
+TEST(Stack, Size) {
+  s21::Stack<int> s21_stack;
+  s21_stack.push(1);
+  s21_stack.push(2);
+  s21_stack.push(3);
+  std::stack<int> std_stack;
+  std_stack.push(1);
+  std_stack.push(2);
+  std_stack.push(3);
+  EXPECT_EQ(s21_stack.size(), std_stack.size());
+}
 
-// TEST(Stack, Operator_Copy) {
-//   s21::Stack<int> s21_stack_int = {1, 2, 3};
-//   std::stack<int> std_stack_int;
-//   std_stack_int.push(1);
-//   std_stack_int.push(2);
-//   std_stack_int.push(3);
-//   s21::Stack<int> s21_stack_empty;
-//   std::stack<int> std_stack_empty;
-//   s21_stack_empty = s21_stack_int;
-//   std_stack_empty = std_stack_int;
-//   EXPECT_EQ(s21_stack_empty.top(), std_stack_empty.top());
-//   EXPECT_EQ(s21_stack_int.empty(), std_stack_int.empty());
-// }
+TEST(Stack, Top) {
+  s21::Stack<int> s21_stack;
+  s21_stack.push(1);
+  s21_stack.push(2);
+  s21_stack.push(3);
+  std::stack<int> std_stack;
+  std_stack.push(1);
+  std_stack.push(2);
+  std_stack.push(3);
+  EXPECT_EQ(s21_stack.top(), std_stack.top());
+}
 
-// TEST(Stack, Constructor_Move) {
-//   s21::Stack<int> s21_stack = {1, 2, 3};
-//   s21::Stack<int> s21_move(std::move(s21_stack));
-//   std::stack<int> std_stack;
-//   std_stack.push(1);
-//   std_stack.push(2);
-//   std_stack.push(3);
-//   std::stack<int> std_move(std::move(std_stack));
-//   EXPECT_EQ(s21_move.top(), std_move.top());
-//   EXPECT_EQ(s21_stack.empty(), std_stack.empty());
-// }
+TEST(Stack, Constructor_stack) {
+  s21::Stack<int> s21_stack = {1, 2, 3};
+  std::stack<int> std_stack;
+  std_stack.push(1);
+  std_stack.push(2);
+  std_stack.push(3);
+  EXPECT_EQ(s21_stack.size(), std_stack.size());
+  while (!s21_stack.empty()) {
+    EXPECT_EQ(s21_stack.top(), std_stack.top());
+    std_stack.pop();
+    s21_stack.pop();
+  }
+}
 
-// TEST(Stack, Operator_Move) {
-//   s21::Stack<int> s21_stack_int = {1, 2, 3};
-//   std::stack<int> std_stack_int;
-//   std_stack_int.push(1);
-//   std_stack_int.push(2);
-//   std_stack_int.push(3);
-//   s21::Stack<int> s21_stack_empty;
-//   std::stack<int> std_stack_empty;
-//   s21_stack_empty = std::move(s21_stack_int);
-//   std_stack_empty = std::move(std_stack_int);
-//   EXPECT_EQ(s21_stack_empty.top(), std_stack_empty.top());
-//   EXPECT_EQ(s21_stack_int.empty(), std_stack_int.empty());
-// }
+TEST(Stack, Constructor_Copy) {
+  s21::Stack<int> s21_stack = {1, 2, 3};
+  s21::Stack<int> s21_copy(s21_stack);
 
-// TEST(Stack, Top) {
-//   s21::Stack<int> s21_stack_int = {1, 2, 3};
-//   std::stack<int> std_stack_int;
-//   std_stack_int.push(1);
-//   std_stack_int.push(2);
-//   std_stack_int.push(3);
-//   s21::Stack<double> s21_stack_double = {1.1f, 2.1f, 3.1f};
-//   std::stack<double> std_stack_double;
-//   std_stack_double.push(1.1f);
-//   std_stack_double.push(2.1f);
-//   std_stack_double.push(3.1f);
-//   s21::Stack<std::string> s21_stack_string = {"abc", "def", "ghf"};
-//   std::stack<std::string> std_stack_string;
-//   std_stack_string.push("abc");
-//   std_stack_string.push("def");
-//   std_stack_string.push("ghf");
-//   EXPECT_EQ(s21_stack_int.top(), std_stack_int.top());
-//   EXPECT_EQ(s21_stack_double.top(), std_stack_double.top());
-//   EXPECT_EQ(s21_stack_string.top(), std_stack_string.top());
-// }
+  std::stack<int> std_stack;
+  std_stack.push(1);
+  std_stack.push(2);
+  std_stack.push(3);
+  std::stack<int> std_copy_lst(std_stack);
+  EXPECT_EQ(s21_stack.size(), std_stack.size());
+  while (!s21_stack.empty()) {
+    EXPECT_EQ(s21_stack.top(), std_stack.top());
+    std_stack.pop();
+    s21_stack.pop();
+  }
+}
 
-// TEST(Stack, Empty) {
-//   s21::Stack<int> s21_stack_int = {1, 2, 3};
-//   std::stack<int> std_stack_int;
-//   std_stack_int.push(1);
-//   std_stack_int.push(2);
-//   std_stack_int.push(3);
-//   EXPECT_EQ(s21_stack_int.empty(), std_stack_int.empty());
-//   s21::Stack<int> s21_stack_empty;
-//   std::stack<int> std_stack_empty;
-//   EXPECT_EQ(s21_stack_empty.empty(), std_stack_empty.empty());
-// }
+TEST(Stack, Operator_Copy) {
+  s21::Stack<int> s21_stack_int = {1, 2, 3};
+  std::stack<int> std_stack_int;
+  std_stack_int.push(1);
+  std_stack_int.push(2);
+  std_stack_int.push(3);
+  s21::Stack<int> s21_stack_empty;
+  std::stack<int> std_stack_empty;
+  s21_stack_empty = s21_stack_int;
+  std_stack_empty = std_stack_int;
+  EXPECT_EQ(s21_stack_empty.size(), std_stack_empty.size());
+  while (!s21_stack_empty.empty()) {
+    EXPECT_EQ(s21_stack_empty.top(), std_stack_empty.top());
+    std_stack_empty.pop();
+    s21_stack_empty.pop();
+  }
 
-// TEST(Stack, Size) {
-//   s21::Stack<int> s21_stack_int = {1, 2, 3};
-//   std::stack<int> std_stack_int;
-//   std_stack_int.push(1);
-//   std_stack_int.push(2);
-//   std_stack_int.push(3);
-//   EXPECT_EQ(s21_stack_int.size(), std_stack_int.size());
-//   s21::Stack<int> s21_stack_empty;
-//   std::stack<int> std_stack_empty;
-//   EXPECT_EQ(s21_stack_empty.size(), std_stack_empty.size());
-// }
+  EXPECT_EQ(s21_stack_int.empty(), std_stack_int.empty());
+}
 
-// TEST(Stack, Push) {
-//   s21::Stack<int> s21_stack_int;
-//   s21_stack_int.push(1);
-//   s21_stack_int.push(2);
-//   s21_stack_int.push(3);
-//   std::stack<int> std_stack_int;
-//   std_stack_int.push(1);
-//   std_stack_int.push(2);
-//   std_stack_int.push(3);
-//   EXPECT_EQ(s21_stack_int.top(), std_stack_int.top());
-// }
+TEST(Stack, Constructor_Move) {
+  s21::Stack<int> s21_stack = {1, 2, 3};
+  s21::Stack<int> s21_move(std::move(s21_stack));
+  std::stack<int> std_stack;
+  std_stack.push(1);
+  std_stack.push(2);
+  std_stack.push(3);
+  std::stack<int> std_move(std::move(std_stack));
+  EXPECT_EQ(s21_move.size(), std_move.size());
+  while (!s21_move.empty()) {
+    EXPECT_EQ(s21_move.top(), std_move.top());
+    std_move.pop();
+    s21_move.pop();
+  }
 
-// TEST(Stack, Pop) {
-//   s21::Stack<int> s21_stack_int;
-//   s21_stack_int.push(1);
-//   s21_stack_int.push(2);
-//   s21_stack_int.push(3);
-//   s21_stack_int.pop();
-//   std::stack<int> std_stack_int;
-//   std_stack_int.push(1);
-//   std_stack_int.push(2);
-//   std_stack_int.push(3);
-//   std_stack_int.pop();
-//   EXPECT_EQ(s21_stack_int.top(), std_stack_int.top());
-//   s21_stack_int.pop();
-//   s21_stack_int.pop();
-//   std_stack_int.pop();
-//   std_stack_int.pop();
-//   EXPECT_EQ(s21_stack_int.empty(), std_stack_int.empty());
-// }
+  EXPECT_EQ(s21_stack.empty(), std_stack.empty());
+}
 
-// TEST(Stack, Swap) {
-//   s21::Stack<int> s21_stack_int = {1, 2, 3};
-//   std::stack<int> std_stack_int;
-//   std_stack_int.push(1);
-//   std_stack_int.push(2);
-//   std_stack_int.push(3);
-//   s21::Stack<int> s21_stack_empty;
-//   std::stack<int> std_stack_empty;
-//   s21_stack_empty.swap(s21_stack_int);
-//   std_stack_empty.swap(std_stack_int);
-//   EXPECT_EQ(s21_stack_empty.top(), std_stack_empty.top());
-//   EXPECT_EQ(s21_stack_int.empty(), std_stack_int.empty());
-// }
+TEST(Stack, Operator_Move) {
+  s21::Stack<int> s21_stack_int = {1, 2, 3};
+  std::stack<int> std_stack_int;
+  std_stack_int.push(1);
+  std_stack_int.push(2);
+  std_stack_int.push(3);
+  s21::Stack<int> s21_stack_empty;
+  std::stack<int> std_stack_empty;
+  s21_stack_empty = std::move(s21_stack_int);
+  std_stack_empty = std::move(std_stack_int);
+  EXPECT_EQ(s21_stack_empty.size(), std_stack_empty.size());
+  while (!s21_stack_empty.empty()) {
+    EXPECT_EQ(s21_stack_empty.top(), std_stack_empty.top());
+    std_stack_empty.pop();
+    s21_stack_empty.pop();
+  }
 
-// TEST(Stack, InsertManyFront) {
-//   s21::Stack<int> s21_stack_int;
-//   s21_stack_int.insert_many_back(1, 2, 3);
-//   EXPECT_EQ(s21_stack_int.top(), 3);
-// }
+  EXPECT_EQ(s21_stack_int.empty(), std_stack_int.empty());
+}
+
+TEST(Stack, Front_And_Back) { //////////
+  s21::Stack<int> s21_stack_int = {1, 2, 3};
+  std::stack<int> std_stack_int;
+  std_stack_int.push(1);
+  std_stack_int.push(2);
+  std_stack_int.push(3);
+  s21::Stack<double> s21_stack_double = {1.1f, 2.1f, 3.1f};
+  std::stack<double> std_stack_double;
+  std_stack_double.push(1.1f);
+  std_stack_double.push(2.1f);
+  std_stack_double.push(3.1f);
+  s21::Stack<std::string> s21_stack_string = {"abc", "def", "ghf"};
+  std::stack<std::string> std_stack_string;
+  std_stack_string.push("abc");
+  std_stack_string.push("def");
+  std_stack_string.push("ghf");
+
+  EXPECT_EQ(s21_stack_int.size(), std_stack_int.size());
+  while (!s21_stack_int.empty()) {
+    EXPECT_EQ(s21_stack_int.top(), std_stack_int.top());
+    std_stack_int.pop();
+    s21_stack_int.pop();
+  }
+
+  EXPECT_EQ(s21_stack_double.size(), std_stack_double.size());
+  while (!s21_stack_double.empty()) {
+    EXPECT_EQ(s21_stack_double.top(), std_stack_double.top());
+    std_stack_double.pop();
+    s21_stack_double.pop();
+  }
+
+  EXPECT_EQ(s21_stack_string.size(), std_stack_string.size());
+  while (!s21_stack_string.empty()) {
+    EXPECT_EQ(s21_stack_string.top(), std_stack_string.top());
+    std_stack_string.pop();
+    s21_stack_string.pop();
+  }
+}
+
+TEST(Stack, Pop) {
+  s21::Stack<int> s21_stack_int;
+  s21_stack_int.push(1);
+  s21_stack_int.push(2);
+  s21_stack_int.push(3);
+  s21_stack_int.pop();
+  std::stack<int> std_stack_int;
+  std_stack_int.push(1);
+  std_stack_int.push(2);
+  std_stack_int.push(3);
+  std_stack_int.pop();
+  EXPECT_EQ(s21_stack_int.size(), std_stack_int.size());
+  EXPECT_EQ(s21_stack_int.top(), std_stack_int.top());
+  s21_stack_int.pop();
+  std_stack_int.pop();
+  EXPECT_EQ(s21_stack_int.size(), std_stack_int.size());
+  s21_stack_int.pop();
+  std_stack_int.pop();
+  EXPECT_EQ(s21_stack_int.size(), std_stack_int.size());
+  EXPECT_EQ(s21_stack_int.empty(), std_stack_int.empty());
+}
+
+TEST(Stack, Swap) {
+  s21::Stack<int> s21_stack_int = {1, 2, 3};
+  std::stack<int> std_stack_int;
+  std_stack_int.push(1);
+  std_stack_int.push(2);
+  std_stack_int.push(3);
+  s21::Stack<int> s21_stack_empty;
+  std::stack<int> std_stack_empty;
+  s21_stack_empty.swap(s21_stack_int);
+  std_stack_empty.swap(std_stack_int);
+
+  EXPECT_EQ(s21_stack_empty.size(), std_stack_empty.size());
+  while (!s21_stack_empty.empty()) {
+    EXPECT_EQ(s21_stack_empty.top(), std_stack_empty.top());
+    std_stack_empty.pop();
+    s21_stack_empty.pop();
+  }
+  EXPECT_EQ(s21_stack_int.empty(), std_stack_int.empty());
+}
+///
+TEST(Stack, Insert_Many_Back_One_Element) {
+  s21::Stack<int> s21_stack;
+  s21_stack.push(1);
+  s21_stack.insert_many_back(2);
+  s21::Stack<int> s21_stack_rez;
+  s21_stack_rez.push(1);
+  s21_stack_rez.push(2);
+
+  EXPECT_EQ(s21_stack.size(), s21_stack_rez.size());
+  while (!s21_stack.empty()) {
+    EXPECT_EQ(s21_stack.top(), s21_stack_rez.top());
+    s21_stack_rez.pop();
+    s21_stack.pop();
+  }
+}
+
+TEST(Stack, Insert_Many_Back_Set_Of_Elements) {
+  s21::Stack<int> s21_stack;
+  s21_stack.push(1);
+  s21_stack.insert_many_back(2, 3);
+  s21::Stack<int> s21_stack_rez;
+  s21_stack_rez.push(1);
+  s21_stack_rez.push(2);
+  s21_stack_rez.push(3);
+  EXPECT_EQ(s21_stack.size(), s21_stack_rez.size());
+  while (!s21_stack.empty()) {
+    EXPECT_EQ(s21_stack.top(), s21_stack_rez.top());
+    s21_stack_rez.pop();
+    s21_stack.pop();
+  }
+}
+
+TEST(Stack, Insert_Many_Back_To_Set_Of_Elements) {
+  s21::Stack<int> s21_stack;
+  s21_stack.push(1);
+  s21_stack.push(2);
+  s21_stack.push(3);
+  s21_stack.insert_many_back(4, 5);
+  s21::Stack<int> s21_stack_rez;
+  s21_stack_rez.push(1);
+  s21_stack_rez.push(2);
+  s21_stack_rez.push(3);
+  s21_stack_rez.push(4);
+  s21_stack_rez.push(5);
+  EXPECT_EQ(s21_stack.size(), s21_stack_rez.size());
+  while (!s21_stack.empty()) {
+    EXPECT_EQ(s21_stack.top(), s21_stack_rez.top());
+    s21_stack_rez.pop();
+    s21_stack.pop();
+  }
+}
+
+TEST(Stack, Insert_Many_Back_To_Empty) {
+  s21::Stack<int> s21_stack;
+  s21_stack.insert_many_back(4, 5);
+  s21::Stack<int> s21_stack_rez;
+  s21_stack_rez.push(4);
+  s21_stack_rez.push(5);
+  EXPECT_EQ(s21_stack.size(), s21_stack_rez.size());
+  while (!s21_stack.empty()) {
+    EXPECT_EQ(s21_stack.top(), s21_stack_rez.top());
+    s21_stack_rez.pop();
+    s21_stack.pop();
+  }
+}
+
+TEST(Stack, Insert_Many_Back_Empty_Elements_Arg) {
+  s21::Stack<int> s21_stack;
+  s21_stack.push(1);
+  s21_stack.push(2);
+  s21_stack.push(3);
+  s21_stack.insert_many_back();
+  s21::Stack<int> s21_stack_rez;
+  s21_stack_rez.push(1);
+  s21_stack_rez.push(2);
+  s21_stack_rez.push(3);
+  EXPECT_EQ(s21_stack.size(), s21_stack_rez.size());
+  while (!s21_stack.empty()) {
+    EXPECT_EQ(s21_stack.top(), s21_stack_rez.top());
+    s21_stack_rez.pop();
+    s21_stack.pop();
+  }
+}
 
 int main(int argc, char **argv) {
   try {
