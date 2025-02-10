@@ -438,6 +438,10 @@ bool List<T>::check_iterator_membership_to_list(const_iterator pos) {
 template <class T>
 typename List<T>::iterator List<T>::insert(List<T>::iterator pos,
                                            const T &value) {
+
+  if (!(*this).check_iterator_membership_to_list(pos)) {
+    return pos;
+  }
   iterator it;
 
   if (pos == (*this).begin()) {
@@ -447,25 +451,16 @@ typename List<T>::iterator List<T>::insert(List<T>::iterator pos,
     (*this).push_back(value);
     it = --((*this).end());
   } else {
-    node<T> *next_node = this->begin_;
-    while ((next_node != pos.p_node_) && (next_node != end_)) {
-      next_node = next_node->next_;
-    }
-    if (next_node == pos.p_node_) {
-      if (next_node != end_) {
-        node<T> *prev_node = next_node->prev_;
-        node<T> *new_node = new node<value_type>(value, prev_node, next_node);
-        prev_node->next_ = new_node;
-        next_node->prev_ = new_node;
 
-        it.p_node_ = new_node;
-      } else {
-        node<T> *new_node = new node<value_type>(value);
-        it.p_node_ = new_node;
-      }
-      (*this).size_++;
-    }
+    node<T> *prev_node = pos.p_node_->prev_;
+    node<T> *new_node = new node<value_type>(value, prev_node, pos.p_node_);
+    prev_node->next_ = new_node;
+    pos.p_node_->prev_ = new_node;
+
+    it.p_node_ = new_node;
+    (*this).size_++;
   }
+
   pos.p_node_ = it.p_node_;
 
   return it;
@@ -684,7 +679,7 @@ typename List<T>::iterator List<T>::insert_many(const_iterator pos,
   iterator ret_it;
   ret_it.p_node_ = pos.p_node_;
   if constexpr (sizeof...(args) > 0) {
-    if (check_iterator_membership_to_list(pos) == true) {
+    if (check_iterator_membership_to_list(pos)) {
       iterator pos_it;
       pos_it.p_node_ = pos.p_node_;
       bool flag_beg = true;

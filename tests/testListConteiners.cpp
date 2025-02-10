@@ -303,7 +303,7 @@ TEST(List, Insert_To_Middle) {
   EXPECT_EQ(s21_lst.size(), std_lst.size());
 }
 
-TEST(List, Insert_With_Iterator_Not_Of_This_List) { /// вопросы к s21_new_it
+TEST(List, Insert_With_Iterator_Not_Of_This_List) {
   s21::List<int> s21_lst1{1, 2};
   s21::List<int> s21_lst2{3};
   s21::List<int>::iterator s21_it2 = s21_lst2.begin();
@@ -1107,59 +1107,117 @@ TEST(List, Insert_Many_With_Iterator_Not_Of_This_List) {
   EXPECT_EQ(s21_lst1.size(), rez_lst.size());
 }
 
-/////////////ост здесь
-// TEST(List, Insert_Many_Back) {
-//   s21::List<int> s21_lst = {1, 2, 3, 4, 5};
-//   s21::List<int>::iterator s21_it;
-//   s21_lst.insert_many_back(7, 8, 9);
-//   s21_it = s21_lst.end();
-//   --s21_it;
-//   EXPECT_EQ(*s21_it, 9);
-//   --s21_it;
-//   EXPECT_EQ(*s21_it, 8);
-//   --s21_it;
-//   EXPECT_EQ(*s21_it, 7);
-//   --s21_it;
-//   EXPECT_EQ(*s21_it, 5);
-//   --s21_it;
-//   EXPECT_EQ(*s21_it, 4);
-// }
+TEST(List, Insert_Many_Back_One_Element) {
+  s21::List<int> s21_lst = {1, 2};
+  s21_lst.insert_many_back(3);
+  s21::List<int> rez_lst = {1, 2, 3};
 
-// TEST(List, Insert_Many_Back_One_Element) {
+  s21::List<int>::iterator rez_it_check = rez_lst.begin();
+  for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
+       s21_it_check++) {
+    EXPECT_EQ(*rez_it_check, *s21_it_check);
+    rez_it_check++;
+  }
+  EXPECT_EQ(s21_lst.size(), rez_lst.size());
+}
 
-// TEST(List, Insert_Many_Back_Set_Of_Elements) {
+TEST(List, Insert_Many_Back_Set_Of_Elements) {
+  s21::List<int> s21_lst = {1, 2};
+  s21_lst.insert_many_back(3, 4, 5);
+  s21::List<int> rez_lst = {1, 2, 3, 4, 5};
 
-// TEST(List, Insert_Many_Back_Empty_Elements_Arg) {
+  s21::List<int>::iterator rez_it_check = rez_lst.begin();
+  for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
+       s21_it_check++) {
+    EXPECT_EQ(*rez_it_check, *s21_it_check);
+    rez_it_check++;
+  }
+  EXPECT_EQ(s21_lst.size(), rez_lst.size());
+}
 
-// TEST(List, Insert_Many_Back_To_Empty_List) {
+TEST(List, Insert_Many_Back_Empty_Elements_Arg) {
+  s21::List<int> s21_lst = {1, 2};
+  s21_lst.insert_many_back();
+  s21::List<int> rez_lst = {1, 2};
 
-// TEST(List, Insert_Many_Back_With_Iterator_Not_Of_This_List) {
+  s21::List<int>::iterator rez_it_check = rez_lst.begin();
+  for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
+       s21_it_check++) {
+    EXPECT_EQ(*rez_it_check, *s21_it_check);
+    rez_it_check++;
+  }
+  EXPECT_EQ(s21_lst.size(), rez_lst.size());
+}
 
-// TEST(List, Insert_Many_Front) {
-//   s21::List<int> s21_lst = {1, 2, 3, 4, 5};
-//   s21::List<int>::iterator s21_it;
-//   s21_lst.insert_many_front(7, 8, 9);
-//   s21_it = s21_lst.begin();
-//   EXPECT_EQ(*s21_it, 9);
-//   ++s21_it;
-//   EXPECT_EQ(*s21_it, 8);
-//   ++s21_it;
-//   EXPECT_EQ(*s21_it, 7);
-//   ++s21_it;
-//   EXPECT_EQ(*s21_it, 1);
-//   ++s21_it;
-//   EXPECT_EQ(*s21_it, 2);
-// }
+TEST(List, Insert_Many_Back_To_Empty_List) {
+  s21::List<int> s21_lst;
+  s21_lst.insert_many_back(3, 4, 5);
+  s21::List<int> rez_lst = {3, 4, 5};
 
-// TEST(List, Insert_Many_Front_One_Element) {
+  s21::List<int>::iterator rez_it_check = rez_lst.begin();
+  for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
+       s21_it_check++) {
+    EXPECT_EQ(*rez_it_check, *s21_it_check);
+    rez_it_check++;
+  }
+  EXPECT_EQ(s21_lst.size(), rez_lst.size());
+}
 
-// TEST(List, Insert_Many_Front_Set_Of_Elements) {
+TEST(List, Insert_Many_Front_One_Element) {
+  s21::List<int> s21_lst = {1, 2};
+  s21_lst.insert_many_front(3);
+  s21::List<int> rez_lst = {3, 1, 2};
 
-// TEST(List, Insert_Many_Front_Empty_Elements_Arg) {
+  s21::List<int>::iterator rez_it_check = rez_lst.begin();
+  for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
+       s21_it_check++) {
+    EXPECT_EQ(*rez_it_check, *s21_it_check);
+    rez_it_check++;
+  }
+  EXPECT_EQ(s21_lst.size(), rez_lst.size());
+}
 
-// TEST(List, Insert_Many_Front_To_Empty_List) {
+TEST(List, Insert_Many_Front_Set_Of_Elements) {
+  s21::List<int> s21_lst = {1, 2};
+  s21_lst.insert_many_front(3, 4, 5);
+  s21::List<int> rez_lst = {5, 4, 3, 1, 2};
 
-// TEST(List, Insert_Many_Front_With_Iterator_Not_Of_This_List) {
+  s21::List<int>::iterator rez_it_check = rez_lst.begin();
+  for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
+       s21_it_check++) {
+    EXPECT_EQ(*rez_it_check, *s21_it_check);
+    rez_it_check++;
+  }
+  EXPECT_EQ(s21_lst.size(), rez_lst.size());
+}
+
+TEST(List, Insert_Many_Front_Empty_Elements_Arg) {
+  s21::List<int> s21_lst = {1, 2};
+  s21_lst.insert_many_front();
+  s21::List<int> rez_lst = {1, 2};
+
+  s21::List<int>::iterator rez_it_check = rez_lst.begin();
+  for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
+       s21_it_check++) {
+    EXPECT_EQ(*rez_it_check, *s21_it_check);
+    rez_it_check++;
+  }
+  EXPECT_EQ(s21_lst.size(), rez_lst.size());
+}
+
+TEST(List, Insert_Many_Front_To_Empty_List) {
+  s21::List<int> s21_lst;
+  s21_lst.insert_many_front(3, 4, 5);
+  s21::List<int> rez_lst = {5, 4, 3};
+
+  s21::List<int>::iterator rez_it_check = rez_lst.begin();
+  for (auto s21_it_check = s21_lst.begin(); s21_it_check != s21_lst.end();
+       s21_it_check++) {
+    EXPECT_EQ(*rez_it_check, *s21_it_check);
+    rez_it_check++;
+  }
+  EXPECT_EQ(s21_lst.size(), rez_lst.size());
+}
 
 // ///////////////////////////////////////////////
 
