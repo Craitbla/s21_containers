@@ -412,6 +412,7 @@ template <class T> void List<T>::clear_del() {
   if (end_ != nullptr) {
     delete end_;
     end_ = nullptr;
+    begin_ = nullptr;
   }
 }
 
@@ -529,7 +530,7 @@ template <class T> void List<T>::pop_front() {
     } else {
       delete begin_;
       begin_ = end_;
-      end_->prev_ = nullptr; ///
+      end_->prev_ = nullptr;
     }
     size_--;
   }

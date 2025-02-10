@@ -6,6 +6,7 @@
 #include <iostream>
 
 #include <list>
+#include <queue>
 #include <stack>
 // using namespace s21;
 
@@ -20,9 +21,11 @@
 // std::cout << "\n" << *(++std_lst.begin()) << *(++s21_lst.begin()) << "\n";
 int main() {
 
-  std::list<int> s21_lst;
-  std::cout << s21_lst.back(); // 2
-
+  s21::Queue<int> s21_queue;
+  std::queue<int> std_queue;
+  bool a = s21_queue.empty();
+  bool b = std_queue.empty();
+  std::cout << a << "\t" << b << "\n";
   // ///////
   // s21::List<int> s21_lst1{1, 2};
   // s21::List<int> s21_lst2{10};

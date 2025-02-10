@@ -27,12 +27,7 @@ public:
     return *this;
   }
 
-  const_reference top() {
-    if (empty()) {
-      throw std::out_of_range("Stack is empty");
-    }
-    return List<T>::back();
-  }
+  const_reference top() { return List<T>::back(); }
 
   bool empty() { return List<T>::empty(); };
 

@@ -27,19 +27,9 @@ public:
     return *this;
   }
 
-  const_reference front() {
-    if (empty()) {
-      throw std::out_of_range("Queue is empty");
-    }
-    return List<T>::front();
-  }
+  const_reference front() { return List<T>::front(); }
 
-  const_reference back() {
-    if (empty()) {
-      throw std::out_of_range("Queue is empty");
-    }
-    return List<T>::back();
-  };
+  const_reference back() { return List<T>::back(); };
 
   bool empty() { return List<T>::empty(); };
 
