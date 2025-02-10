@@ -28,7 +28,7 @@ TYPED_TEST(ListTypedTest, Push_Back_And_Front) {
   TypeParam value{};
   s21_lst.push_back(value);
   std_lst.push_back(value);
-  EXPECT_EQ(s21_lst.back(), std_lst.back());
+  EXPECT_EQ(s21_lst.back(), std_lst.back()); 
   EXPECT_EQ(s21_lst.front(), std_lst.front());
   s21_lst.push_front(value);
   std_lst.push_front(value);
