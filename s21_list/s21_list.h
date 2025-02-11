@@ -462,7 +462,7 @@ typename List<T>::iterator List<T>::insert(List<T>::iterator pos,
   return it;
 }
 
-template <class T> void List<T>::erase(iterator pos) { // доработка
+template <class T> void List<T>::erase(iterator pos) {
   if ((*this).empty()) {
     throw "It is impossible to remove an element from an empty list";
   }

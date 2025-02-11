@@ -8,6 +8,33 @@
 #include <list>
 #include <queue>
 #include <stack>
+
+// TEST(List, Insert_Check_Iterators_After_Func) {
+//   s21::List<int> s21_lst{1, 2, 3};
+//   std::list<int> std_lst{1, 2, 3};
+
+//   s21::List<int>::iterator s21_it1 = s21_lst.begin();
+//   s21::List<int>::iterator s21_it2 = s21_lst.begin();
+//   s21_it2++;
+//   s21::List<int>::iterator s21_it3 = s21_lst.begin();
+//   s21_it3++;
+//   s21_it3++;
+
+//   std::list<int>::iterator std_it1 = std_lst.begin();
+//   std::list<int>::iterator std_it2 = std_lst.begin();
+//   std_it2++;
+//   std::list<int>::iterator std_it3 = std_lst.begin();
+//   std_it3++;
+//   std_it3++;
+
+//   s21::List<int>::iterator s21_new_it = s21_lst.insert(s21_it2, 5);
+//   std::list<int>::iterator std_new_it = std_lst.insert(std_it2, 5);
+
+//   EXPECT_EQ(*s21_new_it, *std_new_it);
+//   EXPECT_EQ(*s21_it1, *std_it1);
+//   EXPECT_EQ(*s21_it2, *std_it2);
+//   EXPECT_EQ(*s21_it3, *std_it3);
+// }
 // using namespace s21;
 
 // потом инкапсуляция
@@ -16,19 +43,20 @@
 
 // std::cout << "\n" << *(++std_lst.begin()) << *(++s21_lst.begin()) << "\n";
 int main() {
-  s21::Queue<int> s21_queue;
-  s21_queue.push(1);
-  s21_queue.insert_many_back(2, 3);
-  s21::Queue<int> s21_queue_rez;
-  s21_queue_rez.push(1);
-  s21_queue_rez.push(2);
-  s21_queue_rez.push(2);
-  std::cout << s21_queue.size() << "\t" << s21_queue_rez.size() << "\n";
-  while (!s21_queue.empty()) {
-    std::cout << s21_queue.front() << "\t" << s21_queue_rez.front() << "\n";
-    s21_queue_rez.pop();
-    s21_queue.pop();
-  }
+  s21::List<int> s21_lst = {1, 2, 3};
+  std::list<int> std_lst = {1, 2, 3};
+  auto it1 = s21_lst.begin();
+  // it1++;
+  auto it2 = std_lst.begin();
+  // it2++;
+
+  s21_lst.pop_front();
+  std_lst.pop_front();
+
+  // s21_lst.erase(it1);
+  // std_lst.erase(it2);
+
+  std::cout << *it1 << "\n" << *it2;
 
   // s21::Queue<int> s21_queue;
   // std::queue<int> std_queue;
