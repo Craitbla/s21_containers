@@ -15,7 +15,7 @@ template <class T> class List {
   using size_type = size_t;
 
 private:
-  template <class value_type> class node {
+  class node {
   public:
     value_type data_;
     node *prev_ = nullptr;
@@ -38,8 +38,8 @@ private:
     }
   };
 
-  node<value_type> *begin_;
-  node<value_type> *end_;
+  node *begin_;
+  node *end_;
   size_type size_;
 
   void clear_del();

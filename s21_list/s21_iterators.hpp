@@ -8,7 +8,7 @@ template <class value_type>
 class List<T>::ListConstIterator {
 public:
   using const_iterator = ListConstIterator<value_type>;
-  node<T> *p_node_ = nullptr;
+  node *p_node_ = nullptr;
 
   ListConstIterator() = default;
   ~ListConstIterator();
@@ -154,7 +154,7 @@ bool List<T>::ListIterator<value_type>::check_advance_with_change(int dist) {
 template <class T>
 template <class value_type>
 bool List<T>::ListIterator<value_type>::check_advance(int dist) {
-  node<T> *temp_node = (*this).p_node_;
+  node *temp_node = (*this).p_node_;
   bool flag = (*this).check_advance_with_change(dist);
   (*this).p_node_ = temp_node;
   return flag;
@@ -163,7 +163,7 @@ bool List<T>::ListIterator<value_type>::check_advance(int dist) {
 template <class T>
 template <class value_type>
 bool List<T>::ListIterator<value_type>::advance(int dist) {
-  node<T> *temp_node = (*this).p_node_;
+  node *temp_node = (*this).p_node_;
   bool flag = (*this).check_advance_with_change(dist);
   if (flag == 0) {
     (*this).p_node_ = temp_node;

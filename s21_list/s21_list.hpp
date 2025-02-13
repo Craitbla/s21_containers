@@ -4,7 +4,7 @@
 namespace s21 {
 
 template <class T> void List<T>::defoult() {
-  begin_ = new node<value_type>();
+  begin_ = new node();
   end_ = begin_;
   size_ = 0;
 }
@@ -49,9 +49,9 @@ template <class T> List<T>::~List() { this->clear_del(); }
 
 template <typename T> List<T> &List<T>::operator=(const List &l) {
   (*this).clear();
-  node<T> *cur_node = l.begin_;
+  node *cur_node = l.begin_;
   if (this->end_ == nullptr) {
-    this->end_ = new node<T>();
+    this->end_ = new node();
   }
   for (size_type i = 0; i < l.size_; i++) {
     (*this).push_back(cur_node->data_);
@@ -139,8 +139,8 @@ typename List<T>::iterator List<T>::insert(List<T>::iterator pos,
     (*this).push_back(value);
     it = --((*this).end());
   } else {
-    node<T> *prev_node = pos.p_node_->prev_;
-    node<T> *new_node = new node<value_type>(value, prev_node, pos.p_node_);
+    node *prev_node = pos.p_node_->prev_;
+    node *new_node = new node(value, prev_node, pos.p_node_);
     prev_node->next_ = new_node;
     pos.p_node_->prev_ = new_node;
 
@@ -162,13 +162,13 @@ template <class T> void List<T>::erase(iterator pos) {
   } else if (pos == --(*this).end()) {
     (*this).pop_back();
   } else {
-    node<T> *cur_node = this->begin_;
+    node *cur_node = this->begin_;
     while ((cur_node != pos.p_node_) && (cur_node != end_)) {
       cur_node = cur_node->next_;
     }
     if (cur_node != end_) {
-      node<T> *next_node = cur_node->next_;
-      node<T> *prev_node = cur_node->prev_;
+      node *next_node = cur_node->next_;
+      node *prev_node = cur_node->prev_;
       delete cur_node;
       next_node->prev_ = prev_node;
       prev_node->next_ = next_node;
@@ -187,11 +187,11 @@ template <class T> size_t List<T>::max_size() const {
 
 template <class T> void List<T>::push_front(const_reference value) {
   if (!(*this).empty()) {
-    node<T> *new_node = new node<value_type>(value, nullptr, begin_);
+    node *new_node = new node(value, nullptr, begin_);
     begin_ = new_node;
     begin_->next_->prev_ = new_node;
   } else {
-    begin_ = new node<value_type>(value, nullptr, end_);
+    begin_ = new node(value, nullptr, end_);
     end_->prev_ = begin_;
   }
   size_++;
@@ -199,11 +199,11 @@ template <class T> void List<T>::push_front(const_reference value) {
 
 template <class T> void List<T>::push_back(const_reference value) {
   if (!(*this).empty()) {
-    node<T> *new_node = new node<value_type>(value, end_->prev_, end_);
+    node *new_node = new node(value, end_->prev_, end_);
     end_->prev_->next_ = new_node;
     end_->prev_ = new_node;
   } else {
-    begin_ = new node<value_type>(value, nullptr, end_);
+    begin_ = new node(value, nullptr, end_);
     end_->prev_ = begin_;
   }
   size_++;
@@ -212,7 +212,7 @@ template <class T> void List<T>::push_back(const_reference value) {
 template <class T> void List<T>::pop_front() {
   if (!(*this).empty()) {
     if (begin_->next_ != end_) {
-      node<T> *new_beg = this->begin_->next_;
+      node *new_beg = this->begin_->next_;
       new_beg->prev_ = nullptr;
       delete begin_;
       begin_ = new_beg;
@@ -228,7 +228,7 @@ template <class T> void List<T>::pop_front() {
 template <class T> void List<T>::pop_back() {
   if (!(*this).empty()) {
     if (begin_->next_ != end_) {
-      node<T> *new_pen = this->end_->prev_->prev_;
+      node *new_pen = this->end_->prev_->prev_;
       delete new_pen->next_;
       new_pen->next_ = end_;
       end_->prev_ = new_pen;
@@ -256,13 +256,13 @@ template <class T> void List<T>::splice(const_iterator pos, List &other) {
   if (!(*this).check_iterator_membership_to_list(pos))
     return;
   if (!other.empty()) {
-    node<T> *next_node = this->begin_;
+    node *next_node = this->begin_;
     while ((next_node != pos.p_node_) && (next_node != nullptr)) {
       next_node = next_node->next_;
     }
     if (next_node != nullptr) {
-      node<T> *other_beg = other.begin_;
-      node<T> *other_end = other.end_->prev_;
+      node *other_beg = other.begin_;
+      node *other_end = other.end_->prev_;
       if (next_node == begin_) {
         next_node->prev_ = other_end;
         other_end->next_ = next_node;
@@ -275,13 +275,13 @@ template <class T> void List<T>::splice(const_iterator pos, List &other) {
         other.begin_ = nullptr;
 
       } else if (next_node == end_) {
-        node<T> *prev_node = next_node->prev_;
+        node *prev_node = next_node->prev_;
         prev_node->next_ = other_beg;
         other_beg->prev_ = prev_node;
         end_ = other.end_;
 
       } else {
-        node<T> *prev_node = next_node->prev_;
+        node *prev_node = next_node->prev_;
 
         prev_node->next_ = other_beg;
         next_node->prev_ = other_end;

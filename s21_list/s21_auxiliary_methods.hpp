@@ -10,8 +10,8 @@ void List<T>::swap_nodes_by_iterators(iterator &it_a, iterator &it_b,
     return;
   }
 
-  node<T> *node_a = it_a.p_node_;
-  node<T> *node_b = it_b.p_node_;
+  node *node_a = it_a.p_node_;
+  node *node_b = it_b.p_node_;
 
   if (it_a == begin() || it_b == begin()) {
     if (it_a == begin()) {
@@ -31,13 +31,13 @@ void List<T>::swap_nodes_by_iterators(iterator &it_a, iterator &it_b,
 
 template <class T>
 void List<T>::swap_beg_and_com(iterator &it_beg, iterator &it_com) {
-  node<T> *n_beg = it_beg.p_node_;
-  node<T> *n_com = it_com.p_node_;
+  node *n_beg = it_beg.p_node_;
+  node *n_com = it_com.p_node_;
 
-  node<T> *beg_next = n_beg->next_;
+  node *beg_next = n_beg->next_;
 
-  node<T> *com_prev = n_com->prev_;
-  node<T> *com_next = n_com->next_;
+  node *com_prev = n_com->prev_;
+  node *com_next = n_com->next_;
 
   if (beg_next == n_com) {
     n_beg->prev_ = n_com;
@@ -62,19 +62,19 @@ void List<T>::swap_beg_and_com(iterator &it_beg, iterator &it_com) {
 
 template <class T>
 void List<T>::swap_com_and_com(iterator &it_com_a, iterator &it_com_b) {
-  node<T> *n_com_a = it_com_a.p_node_;
-  node<T> *n_com_b = it_com_b.p_node_;
+  node *n_com_a = it_com_a.p_node_;
+  node *n_com_b = it_com_b.p_node_;
 
-  node<T> *com_a_prev = n_com_a->prev_;
-  node<T> *com_a_next = n_com_a->next_;
+  node *com_a_prev = n_com_a->prev_;
+  node *com_a_next = n_com_a->next_;
 
   if (com_a_next == n_com_b) {
     swap_com_neighboring(it_com_a, it_com_b);
   } else if (com_a_prev == n_com_b) {
     swap_com_neighboring(it_com_b, it_com_a);
   } else {
-    node<T> *com_b_prev = n_com_b->prev_;
-    node<T> *com_b_next = n_com_b->next_;
+    node *com_b_prev = n_com_b->prev_;
+    node *com_b_next = n_com_b->next_;
 
     com_a_prev->next_ = n_com_b;
     n_com_a->next_ = com_b_next;
@@ -92,12 +92,12 @@ void List<T>::swap_com_and_com(iterator &it_com_a, iterator &it_com_b) {
 
 template <class T>
 void List<T>::swap_com_neighboring(iterator &it_com_a, iterator &it_com_b) {
-  node<T> *n_com_a = it_com_a.p_node_;
-  node<T> *n_com_b = it_com_b.p_node_;
+  node *n_com_a = it_com_a.p_node_;
+  node *n_com_b = it_com_b.p_node_;
 
-  node<T> *com_a_prev = n_com_a->prev_;
+  node *com_a_prev = n_com_a->prev_;
 
-  node<T> *com_b_next = n_com_b->next_;
+  node *com_b_next = n_com_b->next_;
 
   com_a_prev->next_ = n_com_b;
   n_com_a->next_ = com_b_next;
