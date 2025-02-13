@@ -44,6 +44,9 @@ private:
 
   void clear_del();
 
+  template <class value_type> class ListConstIterator;
+  template <class value_type> class ListIterator;
+
 public:
   void defoult();
   List();
@@ -59,8 +62,6 @@ public:
   const_reference front();
   const_reference back();
 
-  template <class value_type> class ListConstIterator;
-  template <class value_type> class ListIterator;
   using const_iterator = ListConstIterator<value_type>;
   using iterator = ListIterator<value_type>;
 
@@ -72,7 +73,6 @@ public:
   bool empty() const;
   size_type size() const { return size_; };
   size_type max_size() const;
-
   void clear();
 
   iterator insert(iterator pos, const_reference value);
