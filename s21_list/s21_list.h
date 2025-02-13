@@ -42,6 +42,8 @@ private:
   node<value_type> *end_;
   size_type size_;
 
+  void clear_del();
+
 public:
   void defoult();
   List();
@@ -67,11 +69,10 @@ public:
   iterator begin();
   iterator end();
 
-  bool empty();
-  size_type size() { return size_; };
-  size_type max_size();
+  bool empty() const;
+  size_type size() const { return size_; };
+  size_type max_size() const;
 
-  void clear_del();
   void clear();
 
   iterator insert(iterator pos, const_reference value);

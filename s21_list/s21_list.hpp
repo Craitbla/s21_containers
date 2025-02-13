@@ -178,9 +178,9 @@ template <class T> void List<T>::erase(iterator pos) {
   }
 }
 
-template <class T> bool List<T>::empty() { return (begin_ == end_); }
+template <class T> bool List<T>::empty() const { return (begin_ == end_); }
 
-template <class T> size_t List<T>::max_size() {
+template <class T> size_t List<T>::max_size() const {
   constexpr auto max_size = std::numeric_limits<std::size_t>::max();
   return max_size / sizeof(T) / 2;
 }

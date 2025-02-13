@@ -121,6 +121,11 @@ bool List<T>::check_iterator_membership_to_list(const_iterator pos) {
   return check_flag;
 }
 
+// template <class T>
+// bool List<T>::check_iterator_membership_to_list(iterator pos) {
+//     return check_iterator_membership_to_list(const_iterator(pos));
+//   }
+
 } // namespace s21
 
 #endif // S21_AUXILIARY_METHODS_HPP

@@ -15,7 +15,6 @@ public:
   Stack(std::initializer_list<value_type> const &items) : List<T>(items) {}
   Stack(const Stack &s) : List<T>(s) {}
   Stack(Stack &&s) : List<T>(std::move(s)) {}
-  ~Stack() { List<T>::clear_del(); }
 
   Stack &operator=(const Stack &s) {
     List<T>::operator=(s);
