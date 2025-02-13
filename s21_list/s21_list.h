@@ -65,10 +65,6 @@ public:
     ListConstIterator() = default;
     ~ListConstIterator() { p_node_ = nullptr; }
 
-    // value_type &operator*() const;
-
-    // const_iterator &operator++();
-
     value_type &operator*() const { return p_node_->data_; }
 
     const_iterator &operator++() {
@@ -102,6 +98,8 @@ public:
     }
   };
   using const_iterator = ListConstIterator<value_type>;
+
+  //////
 
   template <class value_type>
   class ListIterator : public ListConstIterator<value_type> { // наследует
@@ -167,29 +165,10 @@ public:
 
   using iterator = ListIterator<value_type>;
 
-  const_iterator cbegin() {
-    const_iterator it;
-    it.p_node_ = this->begin_;
-    return it;
-  }
-
-  const_iterator cend() {
-    const_iterator it;
-    it.p_node_ = this->end_;
-    return it;
-  }
-
-  iterator begin() {
-    iterator it;
-    it.p_node_ = this->begin_;
-    return it;
-  }
-
-  iterator end() {
-    iterator it;
-    it.p_node_ = this->end_;
-    return it;
-  }
+  const_iterator cbegin();
+  const_iterator cend();
+  iterator begin();
+  iterator end();
 
   bool empty();
   size_type size() { return size_; };

@@ -47,9 +47,6 @@ template <class T> List<T>::List(List &&l) {
 
 template <class T> List<T>::~List() { this->clear_del(); }
 
-// template <typename T>
-// MyList<T>& MyList<T>::operator=(const MyList<T>& other) {
-
 template <typename T> List<T> &List<T>::operator=(const List &l) {
   (*this).clear();
   node<T> *cur_node = l.begin_;
@@ -101,6 +98,30 @@ template <class T> void List<T>::clear() {
   while (!(*this).empty()) {
     this->pop_front();
   }
+}
+
+template <class T> typename List<T>::const_iterator List<T>::cbegin() {
+  const_iterator it;
+  it.p_node_ = this->begin_;
+  return it;
+}
+
+template <class T> typename List<T>::const_iterator List<T>::cend() {
+  const_iterator it;
+  it.p_node_ = this->end_;
+  return it;
+}
+
+template <class T> typename List<T>::iterator List<T>::begin() {
+  iterator it;
+  it.p_node_ = this->begin_;
+  return it;
+}
+
+template <class T> typename List<T>::iterator List<T>::end() {
+  iterator it;
+  it.p_node_ = this->end_;
+  return it;
 }
 
 //////////
