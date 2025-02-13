@@ -1,5 +1,5 @@
-// #ifndef TESTLISTCONTEINERS_H
-// #define TESTLISTCONTEINERS_H
+#ifndef TESTLISTCONTEINERS_H
+#define TESTLISTCONTEINERS_H
 
 #include "testListConteiners.h"
 
@@ -1362,7 +1362,7 @@ TEST(List, Insert_Many_One_Element_To_Middle) {
   s21::List<int> s21_lst = {1, 2};
   s21::List<int>::iterator s21_it = s21_lst.end();
   s21_it--;
-  s21::List<int>::iterator s21_new_it = s21_lst.insert_many(s21_it, 3); //
+  s21::List<int>::iterator s21_new_it = s21_lst.insert_many(s21_it, 3);
   s21::List<int> rez_lst = {1, 3, 2};
 
   s21::List<int>::iterator rez_it_check = rez_lst.begin();
@@ -1894,8 +1894,6 @@ TEST(Queue, Insert_Many_Back_Empty_Elements_Arg) {
   }
 }
 
-///////////// Stack
-
 TEST(Stack, Constructor_Default_And_Empty) {
   s21::Stack<int> s21_stack;
   std::stack<int> std_stack;
@@ -2024,7 +2022,7 @@ TEST(Stack, Operator_Move) {
   EXPECT_EQ(s21_stack_int.empty(), std_stack_int.empty());
 }
 
-TEST(Stack, Front_And_Back) { //////////
+TEST(Stack, Front_And_Back) {
   s21::Stack<int> s21_stack_int = {1, 2, 3};
   std::stack<int> std_stack_int;
   std_stack_int.push(1);
@@ -2104,7 +2102,7 @@ TEST(Stack, Swap) {
   }
   EXPECT_EQ(s21_stack_int.empty(), std_stack_int.empty());
 }
-///
+
 TEST(Stack, Insert_Many_Back_One_Element) {
   s21::Stack<int> s21_stack;
   s21_stack.push(1);
@@ -2198,4 +2196,4 @@ int main(int argc, char **argv) {
   return RUN_ALL_TESTS();
 }
 
-// #endif  // TESTLISTCONTEINERS_H
+#endif // TESTLISTCONTEINERS_H

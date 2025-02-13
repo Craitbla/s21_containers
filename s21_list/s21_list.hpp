@@ -124,8 +124,6 @@ template <class T> typename List<T>::iterator List<T>::end() {
   return it;
 }
 
-//////////
-
 template <class T>
 typename List<T>::iterator List<T>::insert(List<T>::iterator pos,
                                            const T &value) {
