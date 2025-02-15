@@ -4,31 +4,30 @@
 namespace s21 {
 
 template <class T> class List<T>::ListConstIterator {
-public:
+public: ////
   using const_iterator = ListConstIterator;
-  // using node = typename List<T>::node;
-  node *p_node_ = nullptr;
+  node *p_node_ = nullptr; /////
 
   ListConstIterator() = default;
   ~ListConstIterator();
 
-  value_type &operator*() const;
+  const value_type &operator*() const;
   const_iterator &operator++();
   const_iterator operator++(int);
   const_iterator &operator--();
   const_iterator operator--(int);
 
   bool equal(const_iterator &other) const;
-  bool operator==(const_iterator other) const;
-  bool operator!=(const_iterator other) const;
+  bool operator==(const const_iterator other) const;
+  bool operator!=(const const_iterator other) const;
 };
 
 template <class T>
 class List<T>::ListIterator : public List<T>::ListConstIterator {
   using iterator = ListIterator;
-  // using node = typename List<T>::node;
 
 public:
+  value_type &operator*();
   iterator &operator=(const_iterator &it);
   iterator operator-(int dist);
   bool check_advance_with_change(int dist);
@@ -40,7 +39,7 @@ template <class T> List<T>::ListConstIterator::~ListConstIterator() {
   p_node_ = nullptr;
 }
 
-template <class T> T &List<T>::ListConstIterator::operator*() const {
+template <class T> T const &List<T>::ListConstIterator::operator*() const {
   return p_node_->data_;
 }
 
@@ -85,6 +84,10 @@ bool List<T>::ListConstIterator::operator==(const_iterator other) const {
 template <class T>
 bool List<T>::ListConstIterator::operator!=(const_iterator other) const {
   return !(*this).equal(other);
+}
+
+template <class T> T &List<T>::ListIterator::operator*() {
+  return this->p_node_->data_;
 }
 
 template <class T>

@@ -38,16 +38,16 @@ private:
     }
   };
 
-  node *begin_;
-  node *end_;
+  node *begin_ = nullptr;
+  node *end_ = nullptr;
   size_type size_;
 
   void clear_del();
 
+public:
   class ListConstIterator;
   class ListIterator;
 
-public:
   void defoult();
   List();
   List(size_type n);

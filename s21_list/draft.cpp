@@ -43,8 +43,12 @@
 // std::cout << "\n" << *(++std_lst.begin()) << *(++s21_lst.begin()) << "\n";
 int main() {
 
-  s21::Stack<int> s21_lst = {1, 2, 3};
-  //   s21::List<int> s21_lst = {1, 2, 3};
+  // s21::Stack<int> s21_lst = {1, 2, 3};
+  s21::List<int> s21_lst = {1, 2, 3};
+  s21::List<int>::ListIterator it1 = s21_lst.begin();
+  it1++;
+  *it1 = 1;
+  std::cout << *it1;
   //   std::list<int> std_lst = {1, 2, 3};
   //   auto it1 = s21_lst.begin();
   //   // it1++;

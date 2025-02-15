@@ -332,6 +332,13 @@ TEST(List, Iterators_Not_Equality) {
   EXPECT_EQ(s21_it1 != s21_it2, 1);
 }
 
+TEST(List, Iterators_Change_Data) {
+  s21::List<int> s21_lst = {1, 2, 3};
+  s21::List<int>::iterator s21_it1 = s21_lst.begin();
+  *s21_it1 = 100;
+  EXPECT_EQ(*s21_it1, 100);
+}
+
 TEST(List, Сlear) {
   s21::List<int> s21_lst = {1, 2, 3};
   std::list<int> std_lst = {1, 2, 3};
