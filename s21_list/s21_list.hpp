@@ -267,27 +267,25 @@ template <class T> void List<T>::splice(const_iterator pos, List &other) {
         next_node->prev_ = other_end;
         other_end->next_ = next_node;
         begin_ = other_beg;
-
         other.end_->prev_ = nullptr;
 
         delete other.end_;
-        other.end_ = nullptr;
-        other.begin_ = nullptr;
-
       } else if (next_node == end_) {
         node *prev_node = next_node->prev_;
         prev_node->next_ = other_beg;
         other_beg->prev_ = prev_node;
-        end_ = other.end_;
 
+        delete end_;
+        end_ = other.end_;
       } else {
         node *prev_node = next_node->prev_;
-
         prev_node->next_ = other_beg;
         next_node->prev_ = other_end;
 
         other_beg->prev_ = prev_node;
         other_end->next_ = next_node;
+
+        delete other.end_;
       }
       (*this).size_ += other.size_;
       other.end_ = nullptr;

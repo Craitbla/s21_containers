@@ -42,13 +42,21 @@
 
 // std::cout << "\n" << *(++std_lst.begin()) << *(++s21_lst.begin()) << "\n";
 int main() {
+  s21::List<int> s21_lst_first = {1, 2};
+  s21::List<int> s21_lst_second = {4, 5, 6};
+  // s21::List<int>::iterator s21_it = s21_lst_first.begin();
+  s21::List<int>::iterator s21_it = s21_lst_first.end();
+  // s21_it++;
+  s21_lst_first.splice(s21_it, s21_lst_second);
 
-  // s21::Stack<int> s21_lst = {1, 2, 3};
-  s21::List<int> s21_lst = {1, 2, 3};
-  s21::List<int>::ListIterator it1 = s21_lst.begin();
-  it1++;
-  *it1 = 1;
-  std::cout << *it1;
+  // s21::List<int>::iterator rez_it_check = rez_lst.begin();
+  // for (auto s21_it_check = s21_lst1.begin(); s21_it_check !=
+  //   s21_lst1.end();
+  //      s21_it_check++) {
+  //   std::cout << *rez_it_check << "\t" << *s21_it_check << "\n";
+  //   rez_it_check++;
+  // }
+
   //   std::list<int> std_lst = {1, 2, 3};
   //   auto it1 = s21_lst.begin();
   //   // it1++;

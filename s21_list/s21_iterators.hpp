@@ -4,9 +4,9 @@
 namespace s21 {
 
 template <class T> class List<T>::ListConstIterator {
-public: ////
+public: 
   using const_iterator = ListConstIterator;
-  node *p_node_ = nullptr; /////
+  node *p_node_ = nullptr; 
 
   ListConstIterator() = default;
   ~ListConstIterator();
